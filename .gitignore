@@ -2,4 +2,22 @@
 .godot/
 /android/
 
+# Godot-specific files
+.import/
+.export/
+
+# Godot temporary files
+*.tmp
+*.godotimport
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.bak
+*.old
+
+# Logs
+*.log
 
