@@ -1,11 +1,11 @@
 [gd_scene load_steps=6 format=3 uid="uid://djvx1uec6bb4d"]
 
-[ext_resource type="PackedScene" uid="uid://cn2jxd6w8w450" path="res://player.tscn" id="1_chxs0"]
-[ext_resource type="Shader" path="res://main.gdshader" id="2_g0e50"]
-[ext_resource type="Script" path="res://button.gd" id="3_5xtg4"]
+[ext_resource type="PackedScene" uid="uid://cn2jxd6w8w450" path="res://scenes/player.tscn" id="1_g03jv"]
+[ext_resource type="Shader" path="res://assets/shaders/main.gdshader" id="2_2u1wh"]
+[ext_resource type="Script" path="res://scripts/button.gd" id="3_0tuu4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4red0"]
-shader = ExtResource("2_g0e50")
+shader = ExtResource("2_2u1wh")
 shader_parameter/count = 300
 shader_parameter/slant = 0.071
 shader_parameter/speed = 26.754
@@ -17,7 +17,7 @@ shader_parameter/size = Vector2(0.005, 0.2)
 
 [node name="Main" type="Node2D"]
 
-[node name="Player" parent="." instance=ExtResource("1_chxs0")]
+[node name="Player" parent="." instance=ExtResource("1_g03jv")]
 z_index = 2
 
 [node name="ColorRect2" type="ColorRect" parent="."]
@@ -53,7 +53,7 @@ offset_right = -3.05176e-05
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vplu8")
 text = "S"
 flat = true
-script = ExtResource("3_5xtg4")
+script = ExtResource("3_0tuu4")
 
 [connection signal="button_down" from="Sprite2D/Button" to="Sprite2D/Button" method="_on_button_button_down"]
 [connection signal="button_up" from="Sprite2D/Button" to="Sprite2D/Button" method="_on_button_button_up"]
