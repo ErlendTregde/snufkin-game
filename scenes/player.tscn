@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://cn2jxd6w8w450"]
 
-[ext_resource type="Script" path="res://character_body_2d.gd" id="1_qlf6j"]
-[ext_resource type="Texture2D" uid="uid://dtm78k7y02r4i" path="res://idleSnufkin1.png" id="2_8nnec"]
-[ext_resource type="Texture2D" uid="uid://dojogiww13ju7" path="res://idleSnufkin2.png" id="3_sjvdh"]
-[ext_resource type="Texture2D" uid="uid://dsjqhrk7ek8aa" path="res://idleSnufkin3.png" id="4_w2gpu"]
-[ext_resource type="Texture2D" uid="uid://cmugffreg054s" path="res://idleSnufkin4.png" id="5_hjebv"]
+[ext_resource type="Script" path="res://scripts/character_body_2d.gd" id="1_qlf6j"]
+[ext_resource type="Texture2D" uid="uid://dtm78k7y02r4i" path="res://assets/images/idleSnufkin1.png" id="2_8nnec"]
+[ext_resource type="Texture2D" uid="uid://dojogiww13ju7" path="res://assets/images/idleSnufkin2.png" id="3_sjvdh"]
+[ext_resource type="Texture2D" uid="uid://dsjqhrk7ek8aa" path="res://assets/images/idleSnufkin3.png" id="4_w2gpu"]
+[ext_resource type="Texture2D" uid="uid://cmugffreg054s" path="res://assets/images/idleSnufkin4.png" id="5_hjebv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iwhxa"]
 
