@@ -1,17 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://djvx1uec6bb4d"]
 
 [ext_resource type="PackedScene" uid="uid://cn2jxd6w8w450" path="res://scenes/player.tscn" id="1_g03jv"]
-[ext_resource type="Shader" path="res://assets/shaders/main.gdshader" id="2_2u1wh"]
 [ext_resource type="Script" path="res://scripts/button.gd" id="3_0tuu4"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4red0"]
-shader = ExtResource("2_2u1wh")
-shader_parameter/count = 300
-shader_parameter/slant = 0.071
-shader_parameter/speed = 26.754
-shader_parameter/blur = 0.0025
-shader_parameter/colour = Color(1, 1, 1, 1)
-shader_parameter/size = Vector2(0.005, 0.2)
+[ext_resource type="PackedScene" uid="uid://blqjmfmbde80y" path="res://scenes/ground.tscn" id="4_hijc5"]
+[ext_resource type="PackedScene" uid="uid://hx56woh1vwek" path="res://scenes/rainlayer.tscn" id="4_shs03"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vplu8"]
 
@@ -22,26 +14,17 @@ z_index = 2
 
 [node name="ColorRect2" type="ColorRect" parent="."]
 z_index = 1
-offset_left = -2575.0
-offset_top = -1005.0
-offset_right = 2546.0
-offset_bottom = 1601.0
-color = Color(0, 0, 0, 1)
-
-[node name="ColorRect" type="ColorRect" parent="ColorRect2"]
-z_index = 3
-material = SubResource("ShaderMaterial_4red0")
-layout_mode = 0
-offset_left = -971.0
-offset_top = -80.0
-offset_right = 5425.0
-offset_bottom = 3084.0
+offset_left = -2971.0
+offset_top = -1283.0
+offset_right = 2478.0
+offset_bottom = 1844.0
 color = Color(0, 0, 0, 1)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 1
 
 [node name="Button" type="Button" parent="Sprite2D"]
-z_index = 4
+z_index = 1
 anchors_preset = -1
 anchor_left = 328.0
 anchor_top = -171.0
@@ -54,6 +37,13 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_vplu8")
 text = "S"
 flat = true
 script = ExtResource("3_0tuu4")
+
+[node name="Ground" parent="." instance=ExtResource("4_hijc5")]
+z_index = 10
+position = Vector2(28, 231)
+
+[node name="RainLayer" parent="." instance=ExtResource("4_shs03")]
+z_index = 4
 
 [connection signal="button_down" from="Sprite2D/Button" to="Sprite2D/Button" method="_on_button_button_down"]
 [connection signal="button_up" from="Sprite2D/Button" to="Sprite2D/Button" method="_on_button_button_up"]

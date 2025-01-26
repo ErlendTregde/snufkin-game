@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://hx56woh1vwek"]
+
+[ext_resource type="Shader" path="res://assets/shaders/main.gdshader" id="1_fyw58"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3in7t"]
+shader = ExtResource("1_fyw58")
+shader_parameter/count = 300
+shader_parameter/slant = 0.071
+shader_parameter/speed = 26.754
+shader_parameter/blur = 0.0025
+shader_parameter/colour = Color(1, 1, 1, 1)
+shader_parameter/size = Vector2(0.005, 0.2)
+
+[node name="RainLayer" type="Node2D"]
+z_index = -1
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = 4
+material = SubResource("ShaderMaterial_3in7t")
+offset_left = -7401.0
+offset_top = -2092.0
+offset_right = 7375.0
+offset_bottom = 1812.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)

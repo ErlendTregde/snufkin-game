@@ -9,4 +9,3 @@ It is a 2d platform puzzle game where you play the character snufkin
 The flow of the game should look like this
 
 ![image](https://github.com/user-attachments/assets/e21af2dd-69ac-479f-bf76-fbfa16a507e4)
-

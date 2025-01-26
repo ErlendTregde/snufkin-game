@@ -34,6 +34,11 @@ animations = [{
 }, {
 "frames": [],
 "loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
 "name": &"run_left",
 "speed": 5.0
 }, {
@@ -55,6 +60,7 @@ scale = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_iwhxa")
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+position = Vector2(0, -200)
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 drag_horizontal_enabled = true
@@ -65,4 +71,4 @@ drag_right_margin = 0.6
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_u33fb")
-animation = &"idle"
+animation = &"jump"

@@ -10,6 +10,8 @@ func _process(delta):
 func _on_button_button_down():
 	dragging = true
 	of = get_global_mouse_position() - global_position
+	print("Hello, console!")
+
 
 func _on_button_button_up():
 	dragging = false
