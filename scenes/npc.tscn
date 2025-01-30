@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://d3jvjrugb5fh"]
+
+[ext_resource type="Script" path="res://scripts/npc.gd" id="1_ikwb4"]
+[ext_resource type="Texture2D" uid="uid://75a1ecbt8d0l" path="res://assets/images/moominmama.PNG" id="1_j04um"]
+[ext_resource type="PackedScene" uid="uid://cauib76nahvnp" path="res://dialague/dialague.tscn" id="3_rfem8"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7dhfo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_j04um")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 1.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ssxb7"]
+radius = 468.346
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m5ceg"]
+size = Vector2(37.4, 63.6)
+
+[node name="npc" type="CharacterBody2D"]
+position = Vector2(2007, 129)
+scale = Vector2(0.5, 0.5)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 4
+sprite_frames = SubResource("SpriteFrames_7dhfo")
+animation = &"idle"
+
+[node name="chat_detection_area" type="Area2D" parent="."]
+script = ExtResource("1_ikwb4")
+dialogue_control_path = NodePath("../Dialouge")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chat_detection_area"]
+shape = SubResource("CircleShape2D_ssxb7")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="Dialouge" parent="." instance=ExtResource("3_rfem8")]
+dialogue_file = "res://dialague/moominMama.json"
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(7, 12)
+scale = Vector2(10, 10)
+shape = SubResource("RectangleShape2D_m5ceg")

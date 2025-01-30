@@ -1,11 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://djvx1uec6bb4d"]
+[gd_scene load_steps=8 format=3 uid="uid://djvx1uec6bb4d"]
 
 [ext_resource type="PackedScene" uid="uid://cn2jxd6w8w450" path="res://scenes/player.tscn" id="1_g03jv"]
 [ext_resource type="Script" path="res://scripts/button.gd" id="3_0tuu4"]
 [ext_resource type="PackedScene" uid="uid://blqjmfmbde80y" path="res://scenes/ground.tscn" id="4_hijc5"]
 [ext_resource type="PackedScene" uid="uid://hx56woh1vwek" path="res://scenes/rainlayer.tscn" id="4_shs03"]
+[ext_resource type="PackedScene" uid="uid://d3jvjrugb5fh" path="res://scenes/npc.tscn" id="5_iw87x"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vplu8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pu8s4"]
 
 [node name="Main" type="Node2D"]
 
@@ -44,6 +47,11 @@ position = Vector2(28, 231)
 
 [node name="RainLayer" parent="." instance=ExtResource("4_shs03")]
 z_index = 4
+
+[node name="npc" parent="." instance=ExtResource("5_iw87x")]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="npc"]
+shape = SubResource("RectangleShape2D_pu8s4")
 
 [connection signal="button_down" from="Sprite2D/Button" to="Sprite2D/Button" method="_on_button_button_down"]
 [connection signal="button_up" from="Sprite2D/Button" to="Sprite2D/Button" method="_on_button_button_up"]
