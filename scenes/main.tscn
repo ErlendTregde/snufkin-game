@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://djvx1uec6bb4d"]
+[gd_scene load_steps=10 format=3 uid="uid://djvx1uec6bb4d"]
 
 [ext_resource type="PackedScene" uid="uid://cn2jxd6w8w450" path="res://scenes/player.tscn" id="1_g03jv"]
 [ext_resource type="Script" path="res://scripts/button.gd" id="3_0tuu4"]
 [ext_resource type="PackedScene" uid="uid://blqjmfmbde80y" path="res://scenes/ground.tscn" id="4_hijc5"]
 [ext_resource type="PackedScene" uid="uid://hx56woh1vwek" path="res://scenes/rainlayer.tscn" id="4_shs03"]
 [ext_resource type="PackedScene" uid="uid://d3jvjrugb5fh" path="res://scenes/npc.tscn" id="5_iw87x"]
+[ext_resource type="Texture2D" uid="uid://cfwm52xurxriy" path="res://assets/images/Mountan.png" id="6_nl38h"]
+[ext_resource type="Texture2D" uid="uid://4odlx2s076r8" path="res://assets/images/Wood1.png" id="7_xax42"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vplu8"]
 
@@ -13,7 +15,6 @@
 [node name="Main" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_g03jv")]
-z_index = 2
 
 [node name="ColorRect2" type="ColorRect" parent="."]
 z_index = 1
@@ -24,7 +25,7 @@ offset_bottom = 1844.0
 color = Color(0, 0, 0, 1)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-z_index = 1
+z_index = 5
 
 [node name="Button" type="Button" parent="Sprite2D"]
 z_index = 1
@@ -52,6 +53,37 @@ z_index = 4
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="npc"]
 shape = SubResource("RectangleShape2D_pu8s4")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+z_index = -1
+texture_filter = 3
+texture_repeat = 1
+position = Vector2(0, -200)
+texture = ExtResource("6_nl38h")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+z_index = 4
+texture_filter = 3
+texture_repeat = 1
+offset_left = -3672.0
+offset_top = -470.0
+offset_right = 3819.0
+offset_bottom = 42.0
+mouse_filter = 2
+texture = ExtResource("6_nl38h")
+stretch_mode = 1
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+z_index = 1
+texture_filter = 3
+texture_repeat = 1
+offset_left = -2637.0
+offset_top = -284.0
+offset_right = 1634.0
+offset_bottom = 228.0
+mouse_filter = 2
+texture = ExtResource("7_xax42")
+stretch_mode = 1
 
 [connection signal="button_down" from="Sprite2D/Button" to="Sprite2D/Button" method="_on_button_button_down"]
 [connection signal="button_up" from="Sprite2D/Button" to="Sprite2D/Button" method="_on_button_button_up"]

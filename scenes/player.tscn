@@ -49,17 +49,22 @@ animations = [{
 }]
 
 [node name="Player" type="Node2D"]
+z_index = 5
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+z_index = 5
 script = ExtResource("1_qlf6j")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+z_index = 5
 scale = Vector2(0.5, 0.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+z_index = 5
 shape = SubResource("RectangleShape2D_iwhxa")
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+z_index = 5
 position = Vector2(0, -200)
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
@@ -69,6 +74,7 @@ drag_left_margin = 0.6
 drag_right_margin = 0.6
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+z_index = 5
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_u33fb")
 animation = &"idle"
