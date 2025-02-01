@@ -8,6 +8,12 @@ const JUMP_FORCE = -500.0  # Jump strength
 # Reference to the AnimatedSprite2D node
 @onready var animated_sprite = $AnimatedSprite2D
 
+func _ready():
+	z_index = 100  # Ensure it's drawn above the background
+	set_as_top_level(true)  # Prevent it from being affected by parent transformations
+
+
+
 func _physics_process(delta: float) -> void:
 	# Get the horizontal input direction (-1 for left, 1 for right, 0 for idle)
 	var direction := Input.get_axis("ui_left", "ui_right")

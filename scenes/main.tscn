@@ -1,28 +1,94 @@
-[gd_scene load_steps=10 format=3 uid="uid://djvx1uec6bb4d"]
+[gd_scene load_steps=12 format=3 uid="uid://djvx1uec6bb4d"]
 
 [ext_resource type="PackedScene" uid="uid://cn2jxd6w8w450" path="res://scenes/player.tscn" id="1_g03jv"]
 [ext_resource type="Script" path="res://scripts/button.gd" id="3_0tuu4"]
 [ext_resource type="PackedScene" uid="uid://blqjmfmbde80y" path="res://scenes/ground.tscn" id="4_hijc5"]
 [ext_resource type="PackedScene" uid="uid://hx56woh1vwek" path="res://scenes/rainlayer.tscn" id="4_shs03"]
+[ext_resource type="Texture2D" uid="uid://bfirpoyr6oru3" path="res://assets/images/flowers2.png" id="5_7xatm"]
 [ext_resource type="PackedScene" uid="uid://d3jvjrugb5fh" path="res://scenes/npc.tscn" id="5_iw87x"]
-[ext_resource type="Texture2D" uid="uid://cfwm52xurxriy" path="res://assets/images/Mountan.png" id="6_nl38h"]
-[ext_resource type="Texture2D" uid="uid://4odlx2s076r8" path="res://assets/images/Wood1.png" id="7_xax42"]
+[ext_resource type="Texture2D" uid="uid://cym1o0c20skbq" path="res://assets/images/tree.png" id="6_wwont"]
+[ext_resource type="Texture2D" uid="uid://c1mhlyrmwoo2n" path="res://assets/images/Mountan2.png" id="7_aiwq6"]
+[ext_resource type="Texture2D" uid="uid://f0elrvjnpkq4" path="res://assets/images/Woodtry2.png" id="7_katlr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pu8s4"]
+size = Vector2(6, 20)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vplu8"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pu8s4"]
-
 [node name="Main" type="Node2D"]
+z_index = 100
 
 [node name="Player" parent="." instance=ExtResource("1_g03jv")]
+z_index = 100
 
-[node name="ColorRect2" type="ColorRect" parent="."]
+[node name="npc" parent="." instance=ExtResource("5_iw87x")]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="npc"]
+position = Vector2(-13, 0)
+shape = SubResource("RectangleShape2D_pu8s4")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+layer = -10
+
+[node name="Mountan" type="ParallaxLayer" parent="ParallaxBackground"]
 z_index = 1
-offset_left = -2971.0
-offset_top = -1283.0
-offset_right = 2478.0
-offset_bottom = 1844.0
-color = Color(0, 0, 0, 1)
+motion_scale = Vector2(0.1, 0.1)
+
+[node name="Mountan" type="TextureRect" parent="ParallaxBackground/Mountan"]
+z_index = 1
+texture_filter = 3
+texture_repeat = 1
+offset_left = -5140.0
+offset_top = 114.0
+offset_right = 6958.0
+offset_bottom = 673.0
+mouse_filter = 2
+texture = ExtResource("7_aiwq6")
+stretch_mode = 1
+
+[node name="Forest" type="ParallaxLayer" parent="ParallaxBackground"]
+z_index = 1
+motion_scale = Vector2(0.4, 0.4)
+
+[node name="forest" type="TextureRect" parent="ParallaxBackground/Forest"]
+z_index = 1
+texture_filter = 3
+texture_repeat = 1
+offset_left = -4774.0
+offset_top = 348.0
+offset_right = 6551.0
+offset_bottom = 940.0
+mouse_filter = 2
+texture = ExtResource("7_katlr")
+stretch_mode = 1
+
+[node name="Tree" type="ParallaxLayer" parent="ParallaxBackground"]
+z_index = 1
+motion_scale = Vector2(0.6, 0.6)
+
+[node name="tree" type="TextureRect" parent="ParallaxBackground/Tree"]
+z_index = 1
+texture_filter = 3
+texture_repeat = 1
+offset_left = -2664.0
+offset_top = 707.0
+offset_right = 2807.0
+offset_bottom = 1239.0
+texture = ExtResource("6_wwont")
+stretch_mode = 1
+
+[node name="Ground" type="ParallaxLayer" parent="ParallaxBackground"]
+z_index = 1
+motion_scale = Vector2(1.1, 1.1)
+
+[node name="ground" type="TextureRect" parent="ParallaxBackground/Ground"]
+z_index = 100
+offset_left = -2868.0
+offset_top = 884.0
+offset_right = 2408.0
+offset_bottom = 1538.0
+texture = ExtResource("5_7xatm")
+stretch_mode = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 5
@@ -42,48 +108,11 @@ text = "S"
 flat = true
 script = ExtResource("3_0tuu4")
 
-[node name="Ground" parent="." instance=ExtResource("4_hijc5")]
-z_index = 10
-position = Vector2(28, 231)
-
 [node name="RainLayer" parent="." instance=ExtResource("4_shs03")]
-z_index = 4
+z_index = 10
+position = Vector2(1, 0)
 
-[node name="npc" parent="." instance=ExtResource("5_iw87x")]
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="npc"]
-shape = SubResource("RectangleShape2D_pu8s4")
-
-[node name="Sprite2D2" type="Sprite2D" parent="."]
-z_index = -1
-texture_filter = 3
-texture_repeat = 1
-position = Vector2(0, -200)
-texture = ExtResource("6_nl38h")
-
-[node name="TextureRect" type="TextureRect" parent="."]
-z_index = 4
-texture_filter = 3
-texture_repeat = 1
-offset_left = -3672.0
-offset_top = -470.0
-offset_right = 3819.0
-offset_bottom = 42.0
-mouse_filter = 2
-texture = ExtResource("6_nl38h")
-stretch_mode = 1
-
-[node name="TextureRect2" type="TextureRect" parent="."]
-z_index = 1
-texture_filter = 3
-texture_repeat = 1
-offset_left = -2637.0
-offset_top = -284.0
-offset_right = 1634.0
-offset_bottom = 228.0
-mouse_filter = 2
-texture = ExtResource("7_xax42")
-stretch_mode = 1
+[node name="Ground" parent="." instance=ExtResource("4_hijc5")]
 
 [connection signal="button_down" from="Sprite2D/Button" to="Sprite2D/Button" method="_on_button_button_down"]
 [connection signal="button_up" from="Sprite2D/Button" to="Sprite2D/Button" method="_on_button_button_up"]
