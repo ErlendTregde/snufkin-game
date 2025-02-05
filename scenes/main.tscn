@@ -16,7 +16,7 @@ size = Vector2(6, 20)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vplu8"]
 
 [node name="Main" type="Node2D"]
-z_index = 100
+z_index = 9
 
 [node name="Player" parent="." instance=ExtResource("1_g03jv")]
 z_index = 100
@@ -55,7 +55,7 @@ z_index = 1
 texture_filter = 3
 texture_repeat = 1
 offset_left = -4774.0
-offset_top = 348.0
+offset_top = 398.0
 offset_right = 6551.0
 offset_bottom = 940.0
 mouse_filter = 2
@@ -70,9 +70,9 @@ motion_scale = Vector2(0.6, 0.6)
 z_index = 1
 texture_filter = 3
 texture_repeat = 1
-offset_left = -2664.0
+offset_left = -4825.0
 offset_top = 707.0
-offset_right = 2807.0
+offset_right = 5547.0
 offset_bottom = 1239.0
 texture = ExtResource("6_wwont")
 stretch_mode = 1
@@ -83,9 +83,9 @@ motion_scale = Vector2(1.1, 1.1)
 
 [node name="ground" type="TextureRect" parent="ParallaxBackground/Ground"]
 z_index = 100
-offset_left = -2868.0
+offset_left = -4874.0
 offset_top = 884.0
-offset_right = 2408.0
+offset_right = 5192.0
 offset_bottom = 1538.0
 texture = ExtResource("5_7xatm")
 stretch_mode = 1

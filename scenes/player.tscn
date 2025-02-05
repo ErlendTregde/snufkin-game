@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://cn2jxd6w8w450"]
+[gd_scene load_steps=10 format=3 uid="uid://cn2jxd6w8w450"]
 
 [ext_resource type="Script" path="res://scripts/character_body_2d.gd" id="1_qlf6j"]
-[ext_resource type="Texture2D" uid="uid://dtm78k7y02r4i" path="res://assets/images/idleSnufkin1.png" id="2_8nnec"]
-[ext_resource type="Texture2D" uid="uid://dojogiww13ju7" path="res://assets/images/idleSnufkin2.png" id="3_sjvdh"]
-[ext_resource type="Texture2D" uid="uid://dsjqhrk7ek8aa" path="res://assets/images/idleSnufkin3.png" id="4_w2gpu"]
-[ext_resource type="Texture2D" uid="uid://cmugffreg054s" path="res://assets/images/idleSnufkin4.png" id="5_hjebv"]
+[ext_resource type="Texture2D" uid="uid://bis61ahujp6vo" path="res://assets/images/snifkincolour.png" id="2_e34ov"]
+[ext_resource type="Texture2D" uid="uid://b6jc4ue3wxmsi" path="res://assets/images/snufkincolour1.png" id="3_ci340"]
+[ext_resource type="Texture2D" uid="uid://ce3ht0hvmbg0w" path="res://assets/images/snufkincolour2.png" id="4_feedy"]
+[ext_resource type="Texture2D" uid="uid://d2b84lllv414f" path="res://assets/images/running1Right.png" id="6_qj0qo"]
+[ext_resource type="Texture2D" uid="uid://cicib5a20tovt" path="res://assets/images/running2Right.png" id="7_bxkpm"]
+[ext_resource type="Texture2D" uid="uid://b55qh6ch23dlq" path="res://assets/images/running3Right.png" id="8_r6sm0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iwhxa"]
 
@@ -17,35 +19,50 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_8nnec")
+"texture": ExtResource("2_e34ov")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_sjvdh")
+"texture": ExtResource("3_ci340")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_w2gpu")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_hjebv")
+"texture": ExtResource("4_feedy")
 }],
 "loop": true,
 "name": &"idle",
-"speed": 5.0
+"speed": 4.0
 }, {
 "frames": [],
 "loop": true,
 "name": &"jump",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_qj0qo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_bxkpm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_r6sm0")
+}],
 "loop": true,
 "name": &"run_left",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_bxkpm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_r6sm0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_qj0qo")
+}],
 "loop": true,
 "name": &"run_right",
-"speed": 5.0
+"speed": 4.0
 }]
 
 [node name="Player" type="Node2D"]
@@ -70,12 +87,11 @@ position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
-drag_left_margin = 0.6
-drag_right_margin = 0.6
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
 z_index = 5
 position = Vector2(584, 461)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_u33fb")
-animation = &"idle"
+animation = &"run_right"
+frame_progress = 0.102783

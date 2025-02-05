@@ -3,7 +3,7 @@ extends CharacterBody2D
 # Player constants
 const SPEED = 1000.0
 const GRAVITY = 800.0
-const JUMP_FORCE = -500.0  # Jump strength
+const JUMP_FORCE = -300.0  # Jump strength
 
 # Reference to the AnimatedSprite2D node
 @onready var animated_sprite = $AnimatedSprite2D
@@ -32,10 +32,10 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor():
 		if direction == 0:
 			animated_sprite.play("idle")
-		elif direction < 0:
-			animated_sprite.play("run_left")
+			animated_sprite.flip_h = false  # Ensure idle is not flipped
 		else:
 			animated_sprite.play("run_right")
+			animated_sprite.flip_h = direction < 0  # Flip sprite only when running
 	else:
 		animated_sprite.play("jump")  # Optional jump animation
 
