@@ -1,12 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://cn2jxd6w8w450"]
+[gd_scene load_steps=13 format=3 uid="uid://cn2jxd6w8w450"]
 
 [ext_resource type="Script" path="res://scripts/character_body_2d.gd" id="1_qlf6j"]
 [ext_resource type="Texture2D" uid="uid://bis61ahujp6vo" path="res://assets/images/snifkincolour.png" id="2_e34ov"]
+[ext_resource type="AudioStream" uid="uid://beitwfwu3w8kb" path="res://assets/sound/harmonica-solo-2728.mp3" id="3_7cdpl"]
 [ext_resource type="Texture2D" uid="uid://b6jc4ue3wxmsi" path="res://assets/images/snufkincolour1.png" id="3_ci340"]
 [ext_resource type="Texture2D" uid="uid://ce3ht0hvmbg0w" path="res://assets/images/snufkincolour2.png" id="4_feedy"]
 [ext_resource type="Texture2D" uid="uid://d2b84lllv414f" path="res://assets/images/running1Right.png" id="6_qj0qo"]
 [ext_resource type="Texture2D" uid="uid://cicib5a20tovt" path="res://assets/images/running2Right.png" id="7_bxkpm"]
+[ext_resource type="Texture2D" uid="uid://b7w0r68a46j20" path="res://assets/images/sittingIdle1.png" id="8_m535d"]
 [ext_resource type="Texture2D" uid="uid://b55qh6ch23dlq" path="res://assets/images/running3Right.png" id="8_r6sm0"]
+[ext_resource type="Texture2D" uid="uid://cla36a8ioie2l" path="res://assets/images/sittingIdle2.png" id="9_jj716"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iwhxa"]
 
@@ -63,6 +66,17 @@ animations = [{
 "loop": true,
 "name": &"run_right",
 "speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_m535d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_jj716")
+}],
+"loop": true,
+"name": &"sitting",
+"speed": 2.0
 }]
 
 [node name="Player" type="Node2D"]
@@ -71,6 +85,13 @@ z_index = 5
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 z_index = 5
 script = ExtResource("1_qlf6j")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer2D" parent="CharacterBody2D"]
+stream = ExtResource("3_7cdpl")
+volume_db = -33.873
+parameters/looping = true
+
+[node name="IdleTimer" type="Timer" parent="CharacterBody2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
 z_index = 5
@@ -93,5 +114,7 @@ z_index = 5
 position = Vector2(584, 461)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_u33fb")
-animation = &"run_right"
-frame_progress = 0.102783
+animation = &"sitting"
+frame_progress = 0.8114
+
+[connection signal="timeout" from="CharacterBody2D/IdleTimer" to="CharacterBody2D" method="_on_idle_timer_timeout"]
