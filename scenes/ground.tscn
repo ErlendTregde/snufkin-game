@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://blqjmfmbde80y"]
+[gd_scene load_steps=3 format=3 uid="uid://dgtu2mxhpy1av"]
+
+[ext_resource type="Texture2D" uid="uid://l1vo13wfcpcu" path="res://assets/images/theground.png" id="1_upgf7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kwelb"]
 size = Vector2(14386, 40)
@@ -10,3 +12,12 @@ size = Vector2(14386, 40)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(1264, 641)
 shape = SubResource("RectangleShape2D_kwelb")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+z_index = 5
+offset_left = -1323.0
+offset_top = 505.0
+offset_right = 4260.0
+offset_bottom = 1901.0
+texture = ExtResource("1_upgf7")
+stretch_mode = 1

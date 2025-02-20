@@ -1,15 +1,16 @@
-[gd_scene load_steps=13 format=3 uid="uid://djvx1uec6bb4d"]
+[gd_scene load_steps=14 format=3 uid="uid://dc6uqrjmswp4j"]
 
-[ext_resource type="PackedScene" uid="uid://cn2jxd6w8w450" path="res://scenes/player.tscn" id="1_g03jv"]
+[ext_resource type="PackedScene" uid="uid://bkcpahqm2o2k4" path="res://scenes/player.tscn" id="1_g03jv"]
 [ext_resource type="Script" path="res://scripts/button.gd" id="3_0tuu4"]
-[ext_resource type="PackedScene" uid="uid://blqjmfmbde80y" path="res://scenes/ground.tscn" id="4_hijc5"]
-[ext_resource type="PackedScene" uid="uid://hx56woh1vwek" path="res://scenes/rainlayer.tscn" id="4_shs03"]
+[ext_resource type="PackedScene" uid="uid://dgtu2mxhpy1av" path="res://scenes/ground.tscn" id="4_hijc5"]
+[ext_resource type="PackedScene" uid="uid://bea8oskb0moxg" path="res://scenes/rainlayer.tscn" id="4_shs03"]
 [ext_resource type="Texture2D" uid="uid://bfirpoyr6oru3" path="res://assets/images/flowers2.png" id="5_7xatm"]
-[ext_resource type="PackedScene" uid="uid://d3jvjrugb5fh" path="res://scenes/npc.tscn" id="5_iw87x"]
+[ext_resource type="PackedScene" uid="uid://dqjbxor61v60u" path="res://scenes/npc.tscn" id="5_iw87x"]
 [ext_resource type="Texture2D" uid="uid://cym1o0c20skbq" path="res://assets/images/tree.png" id="6_wwont"]
 [ext_resource type="Texture2D" uid="uid://c1mhlyrmwoo2n" path="res://assets/images/Mountan2.png" id="7_aiwq6"]
 [ext_resource type="Texture2D" uid="uid://f0elrvjnpkq4" path="res://assets/images/Woodtry2.png" id="7_katlr"]
 [ext_resource type="Texture2D" uid="uid://drlor8lanstwy" path="res://assets/images/MoominHouse.png" id="10_006dt"]
+[ext_resource type="Texture2D" uid="uid://chvsh4u6wskln" path="res://assets/images/brigde.png" id="11_guwuy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pu8s4"]
 size = Vector2(6, 20)
@@ -23,11 +24,9 @@ z_index = 9
 layer = -10
 
 [node name="Mountan" type="ParallaxLayer" parent="ParallaxBackground"]
-z_index = 2
 motion_scale = Vector2(0.1, 0.1)
 
 [node name="Mountan" type="TextureRect" parent="ParallaxBackground/Mountan"]
-z_index = 2
 texture_filter = 3
 texture_repeat = 1
 offset_left = -5140.0
@@ -39,11 +38,11 @@ texture = ExtResource("7_aiwq6")
 stretch_mode = 1
 
 [node name="Forest" type="ParallaxLayer" parent="ParallaxBackground"]
-z_index = 2
+z_index = 1
 motion_scale = Vector2(0.4, 0.4)
 
 [node name="forest" type="TextureRect" parent="ParallaxBackground/Forest"]
-z_index = 2
+z_index = 1
 texture_filter = 3
 texture_repeat = 1
 offset_left = -4774.0
@@ -69,30 +68,31 @@ offset_bottom = 1239.0
 texture = ExtResource("6_wwont")
 stretch_mode = 1
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="MoominHouse" type="ParallaxLayer" parent="ParallaxBackground"]
 z_index = 2
 
-[node name="MoominHouse" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+[node name="MoominHouse" type="Sprite2D" parent="ParallaxBackground/MoominHouse"]
 z_index = 2
 position = Vector2(2928, 725)
 scale = Vector2(1.3, 1.3)
 texture = ExtResource("10_006dt")
 
-[node name="Ground" type="ParallaxLayer" parent="ParallaxBackground"]
-z_index = 3
-motion_scale = Vector2(1.1, 1.1)
+[node name="ParallaxForeground" type="ParallaxBackground" parent="."]
+layer = 100
 
-[node name="ground" type="TextureRect" parent="ParallaxBackground/Ground"]
-z_index = 3
-offset_left = -4874.0
-offset_top = 915.0
+[node name="Ground" type="ParallaxLayer" parent="ParallaxForeground"]
+z_index = 100
+z_as_relative = false
+
+[node name="ground" type="TextureRect" parent="ParallaxForeground/Ground"]
+z_index = 100
+z_as_relative = false
+offset_left = -1151.0
+offset_top = 896.0
 offset_right = 5192.0
 offset_bottom = 1538.0
 texture = ExtResource("5_7xatm")
 stretch_mode = 1
-
-[node name="Player" parent="." instance=ExtResource("1_g03jv")]
-z_index = 1
 
 [node name="npc" parent="." instance=ExtResource("5_iw87x")]
 position = Vector2(2536, 0)
@@ -124,6 +124,13 @@ z_index = 10
 position = Vector2(1, -40)
 
 [node name="Ground" parent="." instance=ExtResource("4_hijc5")]
+
+[node name="Brigde" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(-1503, 1123)
+texture = ExtResource("11_guwuy")
+
+[node name="Player" parent="." instance=ExtResource("1_g03jv")]
 
 [connection signal="button_down" from="Sprite2D/Button" to="Sprite2D/Button" method="_on_button_button_down"]
 [connection signal="button_up" from="Sprite2D/Button" to="Sprite2D/Button" method="_on_button_button_up"]
