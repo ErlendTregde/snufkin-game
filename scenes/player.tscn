@@ -87,7 +87,6 @@ script = ExtResource("1_qlf6j")
 [node name="AudioStreamPlayer" type="AudioStreamPlayer2D" parent="CharacterBody2D"]
 z_index = 1
 stream = ExtResource("3_7cdpl")
-volume_db = -33.873
 parameters/looping = true
 
 [node name="IdleTimer" type="Timer" parent="CharacterBody2D"]
@@ -112,6 +111,6 @@ drag_vertical_enabled = true
 position = Vector2(584, 461)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_u33fb")
-animation = &"run_right"
+animation = &"idle"
 
 [connection signal="timeout" from="CharacterBody2D/IdleTimer" to="CharacterBody2D" method="_on_idle_timer_timeout"]
