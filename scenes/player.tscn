@@ -80,9 +80,9 @@ animations = [{
 "speed": 2.0
 }]
 
-[node name="Player" type="Node2D"]
+[node name="Player" type="Node2D" groups=["Player"]]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["Player"]]
 script = ExtResource("1_qlf6j")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer2D" parent="CharacterBody2D"]

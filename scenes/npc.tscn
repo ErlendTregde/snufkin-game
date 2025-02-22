@@ -22,7 +22,8 @@ radius = 468.346
 size = Vector2(37.4, 63.6)
 
 [node name="npc" type="CharacterBody2D"]
-position = Vector2(2536, 743)
+z_index = 1
+position = Vector2(368, 1495)
 scale = Vector2(0.5, 0.5)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

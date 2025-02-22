@@ -17,9 +17,9 @@ z_index = -1
 [node name="ColorRect" type="ColorRect" parent="."]
 z_index = 4
 material = SubResource("ShaderMaterial_3in7t")
-offset_left = -7123.0
-offset_top = -1517.0
-offset_right = 7653.0
-offset_bottom = 1874.0
+offset_left = -3251.0
+offset_top = 19.0
+offset_right = 3205.0
+offset_bottom = 1250.0
 mouse_filter = 2
 color = Color(0, 0, 0, 1)

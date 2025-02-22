@@ -136,6 +136,7 @@ texture = ExtResource("11_guwuy")
 
 [node name="Area2D" type="Area2D" parent="Brigde"]
 z_index = 1
+collision_mask = 3
 script = ExtResource("11_cufjj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Brigde/Area2D"]
@@ -150,7 +151,7 @@ offset_right = 161.0
 offset_bottom = -81.0
 text = "\"Press E to go fishing"
 
-[node name="Player" parent="." groups=["Player"] instance=ExtResource("1_g03jv")]
+[node name="Player" parent="." instance=ExtResource("1_g03jv")]
 
 [connection signal="button_down" from="Sprite2D/Button" to="Sprite2D/Button" method="_on_button_button_down"]
 [connection signal="button_up" from="Sprite2D/Button" to="Sprite2D/Button" method="_on_button_button_up"]
