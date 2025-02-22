@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dc6uqrjmswp4j"]
+[gd_scene load_steps=16 format=3 uid="uid://dc6uqrjmswp4j"]
 
 [ext_resource type="PackedScene" uid="uid://bkcpahqm2o2k4" path="res://scenes/player.tscn" id="1_g03jv"]
 [ext_resource type="Script" path="res://scripts/button.gd" id="3_0tuu4"]
@@ -10,12 +10,16 @@
 [ext_resource type="Texture2D" uid="uid://c1mhlyrmwoo2n" path="res://assets/images/Mountan2.png" id="7_aiwq6"]
 [ext_resource type="Texture2D" uid="uid://f0elrvjnpkq4" path="res://assets/images/Woodtry2.png" id="7_katlr"]
 [ext_resource type="Texture2D" uid="uid://drlor8lanstwy" path="res://assets/images/MoominHouse.png" id="10_006dt"]
+[ext_resource type="Script" path="res://scripts/FishingInteraction.gd" id="11_cufjj"]
 [ext_resource type="Texture2D" uid="uid://chvsh4u6wskln" path="res://assets/images/brigde.png" id="11_guwuy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pu8s4"]
 size = Vector2(6, 20)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vplu8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ftqk5"]
+size = Vector2(385.5, 1365)
 
 [node name="Main" type="Node2D"]
 z_index = 9
@@ -130,7 +134,25 @@ z_index = 1
 position = Vector2(-1503, 1123)
 texture = ExtResource("11_guwuy")
 
-[node name="Player" parent="." instance=ExtResource("1_g03jv")]
+[node name="Area2D" type="Area2D" parent="Brigde"]
+z_index = 1
+script = ExtResource("11_cufjj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Brigde/Area2D"]
+position = Vector2(-9.25, 2)
+shape = SubResource("RectangleShape2D_ftqk5")
+
+[node name="Label" type="Label" parent="Brigde/Area2D"]
+z_index = 1
+offset_left = -145.0
+offset_top = -136.0
+offset_right = 161.0
+offset_bottom = -81.0
+text = "\"Press E to go fishing"
+
+[node name="Player" parent="." groups=["Player"] instance=ExtResource("1_g03jv")]
 
 [connection signal="button_down" from="Sprite2D/Button" to="Sprite2D/Button" method="_on_button_button_down"]
 [connection signal="button_up" from="Sprite2D/Button" to="Sprite2D/Button" method="_on_button_button_up"]
+[connection signal="body_entered" from="Brigde/Area2D" to="Brigde/Area2D" method="_on_body_entered"]
+[connection signal="body_exited" from="Brigde/Area2D" to="Brigde/Area2D" method="_on_body_exited"]

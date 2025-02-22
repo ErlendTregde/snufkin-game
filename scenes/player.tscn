@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://cla36a8ioie2l" path="res://assets/images/sittingIdle2.png" id="9_jj716"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iwhxa"]
+size = Vector2(101, 161)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_u33fb"]
 animations = [{
@@ -97,6 +98,7 @@ scale = Vector2(0.5, 0.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 z_index = 1
+position = Vector2(578.5, 467.5)
 shape = SubResource("RectangleShape2D_iwhxa")
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]

@@ -1,3 +1,9 @@
-[gd_scene format=3 uid="uid://3rnt5jp1dcge"]
+[gd_scene load_steps=2 format=3 uid="uid://3rnt5jp1dcge"]
+
+[ext_resource type="Texture2D" uid="uid://chvsh4u6wskln" path="res://assets/images/brigde.png" id="1_rwkfx"]
 
 [node name="FishingScene" type="Node2D"]
+position = Vector2(528, 344)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_rwkfx")
