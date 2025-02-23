@@ -19,7 +19,7 @@ size = Vector2(6, 20)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vplu8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ftqk5"]
-size = Vector2(385.5, 1365)
+size = Vector2(385.5, 276)
 
 [node name="Main" type="Node2D"]
 z_index = 9
@@ -144,10 +144,10 @@ script = ExtResource("11_cufjj")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Brigde/Area2D/StaticBody2D"]
 position = Vector2(-6, 21.5)
 scale = Vector2(18.1, 5.65)
-polygon = PackedVector2Array(10.884, 3.80531, 6.68508, -2.56636, 2.92818, -6.28319, -0.220993, -5.39822, -3.59116, -4.51328, -6.46409, -2.21239, -10.8287, 3.27434)
+polygon = PackedVector2Array(10.4972, 4.51328, 6.57458, -0.97345, 2.98342, -4.1593, -0.165749, -4.33629, -3.70166, -3.80531, -6.40884, -1.85841, -10.3315, 2.74336)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Brigde/Area2D"]
-position = Vector2(-9.25, 2)
+position = Vector2(-9.25, -50)
 shape = SubResource("RectangleShape2D_ftqk5")
 
 [node name="Label" type="Label" parent="Brigde/Area2D"]

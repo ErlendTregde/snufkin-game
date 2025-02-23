@@ -1,9 +1,30 @@
-[gd_scene load_steps=2 format=3 uid="uid://3rnt5jp1dcge"]
+[gd_scene load_steps=4 format=3 uid="uid://3rnt5jp1dcge"]
 
 [ext_resource type="Texture2D" uid="uid://chvsh4u6wskln" path="res://assets/images/brigde.png" id="1_rwkfx"]
+[ext_resource type="Script" path="res://scripts/GoHomebutton.gd" id="2_f4jrf"]
+[ext_resource type="Script" path="res://scripts/fishing_player.gd" id="3_pn507"]
 
 [node name="FishingScene" type="Node2D"]
 position = Vector2(528, 344)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(412, 236)
 texture = ExtResource("1_rwkfx")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" type="Button" parent="Control"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Hello"
+script = ExtResource("2_f4jrf")
+
+[node name="FishingPlayer" type="Node2D" parent="."]
+script = ExtResource("3_pn507")
+
+[node name="Sprite2D" type="Sprite2D" parent="FishingPlayer"]
