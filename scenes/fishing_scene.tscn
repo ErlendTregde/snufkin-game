@@ -1,8 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://3rnt5jp1dcge"]
+[gd_scene load_steps=6 format=3 uid="uid://3rnt5jp1dcge"]
 
 [ext_resource type="Texture2D" uid="uid://chvsh4u6wskln" path="res://assets/images/brigde.png" id="1_rwkfx"]
 [ext_resource type="Script" path="res://scripts/GoHomebutton.gd" id="2_f4jrf"]
 [ext_resource type="Script" path="res://scripts/fishing_player.gd" id="3_pn507"]
+[ext_resource type="Texture2D" uid="uid://7fptxgkftifk" path="res://assets/images/fishing.png" id="4_rle4s"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qw8kf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_rle4s")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="FishingScene" type="Node2D"]
 position = Vector2(528, 344)
@@ -14,17 +26,25 @@ texture = ExtResource("1_rwkfx")
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 377.0
+offset_top = -67.0
+offset_right = 440.0
+offset_bottom = -27.0
 
 [node name="Button" type="Button" parent="Control"]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.025
+anchor_right = 1.2
+anchor_bottom = 1.025
 text = "Hello"
 script = ExtResource("2_f4jrf")
 
 [node name="FishingPlayer" type="Node2D" parent="."]
+position = Vector2(-228, -140)
 script = ExtResource("3_pn507")
 
-[node name="Sprite2D" type="Sprite2D" parent="FishingPlayer"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="FishingPlayer"]
+position = Vector2(626, 300)
+scale = Vector2(0.489258, 0.508926)
+sprite_frames = SubResource("SpriteFrames_qw8kf")
