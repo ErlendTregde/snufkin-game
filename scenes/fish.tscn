@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://bh4lqdrmxejed"]
+
+[ext_resource type="Script" path="res://scripts/fish.gd" id="1_sx5di"]
+[ext_resource type="Texture2D" uid="uid://ser0fve3tefq" path="res://assets/images/fish.png" id="2_xxc0e"]
+
+[sub_resource type="Curve2D" id="Curve2D_rvinf"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 786, 185, 0, 0, 0, 0, 705, 266, 0, 0, 0, 0, 559, 345, 0, 0, 0, 0, 517, 421, 0, 0, 0, 0, 438, 469, 0, 0, 0, 0, 340, 569, 0, 0, 0, 0, 71.2361, 63.3298, 0, 0, 0, 0, -589.505, -182.953, 0, 0, 0, 0, -666.935, 246.283, 0, 0, 0, 0, -239.519, 256.335, 0, 0, 0, 0, 168.282, -352.838, 0, 0, 0, 0, 1213.08, 79.4136, 0, 0, 0, 0, -534.787, 479.497, 0, 0, 0, 0, -830.056, 326.702, 0, 0, 0, 0, -469.745, 899.686, 0, 0, 0, 0, 260.167, 755.937)
+}
+point_count = 16
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ojnp0"]
+
+[node name="Fish" type="Node2D"]
+
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2(390, 132)
+scale = Vector2(0.96861, 0.994792)
+curve = SubResource("Curve2D_rvinf")
+
+[node name="Area2D" type="Area2D" parent="Path2D"]
+position = Vector2(-402.639, -132.691)
+scale = Vector2(1.03241, 1.00524)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/Area2D"]
+shape = SubResource("RectangleShape2D_ojnp0")
+
+[node name="Sprite2D" type="Sprite2D" parent="Path2D"]
+z_index = 5
+position = Vector2(-402.639, -132.691)
+scale = Vector2(1.03241, 1.00524)
+texture = ExtResource("2_xxc0e")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(786, 185)
+rotation = 2.35619
+script = ExtResource("1_sx5di")
