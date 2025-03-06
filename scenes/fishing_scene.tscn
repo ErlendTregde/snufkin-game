@@ -23,7 +23,7 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_k3orv"]
 
 [node name="FishingScene" type="Node2D"]
-position = Vector2(528, 344)
+position = Vector2(563, 138)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(412, 236)
@@ -36,6 +36,7 @@ offset_left = 377.0
 offset_top = -67.0
 offset_right = 440.0
 offset_bottom = -27.0
+metadata/_edit_use_anchors_ = true
 
 [node name="Button" type="Button" parent="Control"]
 layout_mode = 1
@@ -45,6 +46,7 @@ anchor_right = 1.2
 anchor_bottom = 1.025
 text = "Hello"
 script = ExtResource("2_f4jrf")
+metadata/_edit_use_anchors_ = true
 
 [node name="FishingPlayer" type="Node2D" parent="."]
 position = Vector2(-228, -140)
