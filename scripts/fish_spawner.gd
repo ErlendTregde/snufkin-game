@@ -1,39 +1,33 @@
 extends Node2D
 
 @export var fish_scene: PackedScene  # Assign fish.tscn in the Inspector
-@export var spawn_time: float = 3.0  # Time between spawns
 
 func _ready():
-	print("✅ FishSpawner Ready!")  # Confirm the script runs
-	if fish_scene == null:
-		print("❌ ERROR: No Fish Scene Assigned!")
-	else:
-		print("🎣 Fish Scene Assigned:", fish_scene.resource_path)
-	
-	spawn_fish()  # Try spawning a fish
-	start_spawning()  # Start the timer
+	start_spawning()
 
 func spawn_fish():
-	print("🐟 Attempting to Spawn Fish...")  # Debugging print
-
-	var fish = fish_scene.instantiate()  # Create fish instance
-	if fish == null:
-		print("❌ ERROR: Failed to Instantiate Fish!")
-		return
-
-	add_child(fish)  # Add fish to scene
+	if fish_scene:
+		var fish = fish_scene.instantiate()  # Create fish instance
+		add_child(fish)  # Add fish to scene
+		
+		# Try to find PathFollow2D inside the Fish node
+		var path_follow = fish.get_node("Path2D/PathFollow2D")  # Adjust path if needed
+		if path_follow:
+			path_follow.progress_ratio = randf()  # Move fish to a random start point
+			print("✅ Fish Spawned & Moving!")
+		else:
+			print("⚠ PathFollow2D not found in Fish scene!")
 	
-	# Find PathFollow2D inside the Fish node
-	var path_follow = fish.find_child("PathFollow2D", true, false)
-	if path_follow:
-		path_follow.progress_ratio = 0  # Start at top
-		print("✅ Fish Spawned & Moving!")
-	else:
-		print("⚠️ WARNING: PathFollow2D not found in Fish scene!")
+	# Restart spawning with a new random interval
+	start_spawning()
 
 func start_spawning():
 	var timer = Timer.new()
-	timer.wait_time = spawn_time
-	timer.autostart = true
-	timer.timeout.connect(spawn_fish)
+	var random_spawn_time = randf_range(5.0, 60.0)  # Random time between 5 sec and 60 sec
+	timer.wait_time = random_spawn_time
+	timer.one_shot = true
+	timer.connect("timeout", spawn_fish)
 	add_child(timer)
+	timer.start()
+	
+	print("⏳ Next fish in:", random_spawn_time, "seconds")

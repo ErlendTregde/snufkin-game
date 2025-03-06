@@ -5,7 +5,7 @@
 
 [sub_resource type="Curve2D" id="Curve2D_rvinf"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 786, 185, 0, 0, 0, 0, 705, 266, 0, 0, 0, 0, 559, 345, 0, 0, 0, 0, 517, 421, 0, 0, 0, 0, 438, 469, 0, 0, 0, 0, 340, 569, 0, 0, 0, 0, 71.2361, 63.3298, 0, 0, 0, 0, -589.505, -182.953, 0, 0, 0, 0, -666.935, 246.283, 0, 0, 0, 0, -239.519, 256.335, 0, 0, 0, 0, 168.282, -352.838, 0, 0, 0, 0, 1213.08, 79.4136, 0, 0, 0, 0, -534.787, 479.497, 0, 0, 0, 0, -830.056, 326.702, 0, 0, 0, 0, -469.745, 899.686, 0, 0, 0, 0, 260.167, 755.937)
+"points": PackedVector2Array(0, 0, 0, 0, 479.037, -102.534, 0, 0, 0, 0, 398.509, -36.1885, 0, 0, 0, 0, 359.278, 15.0785, 0, 0, 0, 0, 307.657, 74.3874, 0, 0, 0, 0, 284.944, 139.728, 0, 0, 0, 0, 275.653, 188.984, 0, 0, 0, 0, 277.718, 238.241, 0, 0, 0, 0, 273.588, 286.492, 0, 0, 0, 0, 227.13, 310.618, 0, 0, 0, 0, 178.606, 324.691, 0, 0, 0, 0, 97.0463, 337.759, 0, 0, 0, 0, 41.2963, 364.901, 0, 0, 0, 0, 18.5833, 403.099, 0, 0, 0, 0, 2.06482, 448.335, 0, 0, 0, 0, -16.5185, 486.534, 0, 0, 0, 0, -70.2037, 513.675)
 }
 point_count = 16
 
@@ -14,24 +14,26 @@ point_count = 16
 [node name="Fish" type="Node2D"]
 
 [node name="Path2D" type="Path2D" parent="."]
-position = Vector2(390, 132)
+position = Vector2(767, 378)
 scale = Vector2(0.96861, 0.994792)
 curve = SubResource("Curve2D_rvinf")
 
-[node name="Area2D" type="Area2D" parent="Path2D"]
-position = Vector2(-402.639, -132.691)
-scale = Vector2(1.03241, 1.00524)
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(479.037, -102.534)
+rotation = 2.45246
+script = ExtResource("1_sx5di")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/Area2D"]
-shape = SubResource("RectangleShape2D_ojnp0")
-
-[node name="Sprite2D" type="Sprite2D" parent="Path2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Path2D/PathFollow2D"]
 z_index = 5
-position = Vector2(-402.639, -132.691)
+position = Vector2(424.971, 686.601)
+rotation = -2.35619
 scale = Vector2(1.03241, 1.00524)
 texture = ExtResource("2_xxc0e")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
-position = Vector2(786, 185)
-rotation = 2.35619
-script = ExtResource("1_sx5di")
+[node name="Area2D" type="Area2D" parent="Path2D/PathFollow2D"]
+position = Vector2(615.853, 1065.14)
+rotation = -2.35619
+scale = Vector2(1.03241, 1.00524)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/Area2D"]
+shape = SubResource("RectangleShape2D_ojnp0")
