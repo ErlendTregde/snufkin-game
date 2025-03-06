@@ -1,0 +1,78 @@
+[gd_scene load_steps=11 format=3 uid="uid://3rnt5jp1dcge"]
+
+[ext_resource type="Texture2D" uid="uid://chvsh4u6wskln" path="res://assets/images/brigde.png" id="1_rwkfx"]
+[ext_resource type="Script" path="res://scripts/GoHomebutton.gd" id="2_f4jrf"]
+[ext_resource type="Script" path="res://scripts/fishing_player.gd" id="3_pn507"]
+[ext_resource type="Texture2D" uid="uid://7fptxgkftifk" path="res://assets/images/fishing.png" id="4_rle4s"]
+[ext_resource type="Script" path="res://scripts/hook.gd" id="5_se1cd"]
+[ext_resource type="Texture2D" uid="uid://duxchnu26p35" path="res://assets/images/hook.png" id="6_b6wg5"]
+[ext_resource type="Script" path="res://scripts/fish_spawner.gd" id="6_ujiln"]
+[ext_resource type="PackedScene" uid="uid://bh4lqdrmxejed" path="res://scenes/fish.tscn" id="8_hxfcq"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qw8kf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_rle4s")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_k3orv"]
+
+[node name="FishingScene" type="Node2D"]
+position = Vector2(563, 138)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(412, 236)
+texture = ExtResource("1_rwkfx")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 377.0
+offset_top = -67.0
+offset_right = 440.0
+offset_bottom = -27.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.025
+anchor_right = 1.2
+anchor_bottom = 1.025
+text = "Hello"
+script = ExtResource("2_f4jrf")
+metadata/_edit_use_anchors_ = true
+
+[node name="FishingPlayer" type="Node2D" parent="."]
+position = Vector2(-228, -140)
+script = ExtResource("3_pn507")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="FishingPlayer"]
+position = Vector2(626, 300)
+scale = Vector2(0.489258, 0.508926)
+sprite_frames = SubResource("SpriteFrames_qw8kf")
+
+[node name="Hook" type="Node2D" parent="FishingPlayer"]
+position = Vector2(586, 292)
+scale = Vector2(0.5, 0.5)
+script = ExtResource("5_se1cd")
+
+[node name="Sprite2D" type="Sprite2D" parent="FishingPlayer/Hook"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_b6wg5")
+
+[node name="Area2D" type="Area2D" parent="FishingPlayer/Hook"]
+scale = Vector2(0.5, 0.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FishingPlayer/Hook/Area2D"]
+scale = Vector2(0.5, 0.5)
+shape = SubResource("CircleShape2D_k3orv")
+
+[node name="FishSpawner" type="Node2D" parent="."]
+script = ExtResource("6_ujiln")
+fish_scene = ExtResource("8_hxfcq")

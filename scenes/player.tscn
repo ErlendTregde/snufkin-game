@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cn2jxd6w8w450"]
+[gd_scene load_steps=13 format=3 uid="uid://bkcpahqm2o2k4"]
 
 [ext_resource type="Script" path="res://scripts/character_body_2d.gd" id="1_qlf6j"]
 [ext_resource type="Texture2D" uid="uid://bis61ahujp6vo" path="res://assets/images/snifkincolour.png" id="2_e34ov"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://cla36a8ioie2l" path="res://assets/images/sittingIdle2.png" id="9_jj716"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iwhxa"]
+size = Vector2(101, 161)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_u33fb"]
 animations = [{
@@ -79,30 +80,29 @@ animations = [{
 "speed": 2.0
 }]
 
-[node name="Player" type="Node2D"]
-z_index = 5
+[node name="Player" type="Node2D" groups=["Player"]]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-z_index = 5
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["Player"]]
 script = ExtResource("1_qlf6j")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer2D" parent="CharacterBody2D"]
+z_index = 1
 stream = ExtResource("3_7cdpl")
-volume_db = -33.873
 parameters/looping = true
 
 [node name="IdleTimer" type="Timer" parent="CharacterBody2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
-z_index = 5
+z_index = 1
 scale = Vector2(0.5, 0.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-z_index = 5
+z_index = 1
+position = Vector2(578.5, 467.5)
 shape = SubResource("RectangleShape2D_iwhxa")
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
-z_index = 5
+z_index = 1
 position = Vector2(577, 326)
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
@@ -110,11 +110,9 @@ drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
-z_index = 5
 position = Vector2(584, 461)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_u33fb")
-animation = &"sitting"
-frame_progress = 0.8114
+animation = &"idle"
 
 [connection signal="timeout" from="CharacterBody2D/IdleTimer" to="CharacterBody2D" method="_on_idle_timer_timeout"]

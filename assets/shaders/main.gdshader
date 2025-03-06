@@ -35,7 +35,7 @@ void fragment() {
 	// slant each line left or right
     uv.x += uv.y * slant;
     float output = 0.0;
-    
+
     for (int i = 1; i <= count; i++) {
         float h1 = Hash(float(i));
         float h2 = Hash2(float(i));

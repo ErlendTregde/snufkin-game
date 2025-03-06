@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://d3jvjrugb5fh"]
+[gd_scene load_steps=7 format=3 uid="uid://dqjbxor61v60u"]
 
 [ext_resource type="Script" path="res://scripts/npc.gd" id="1_ikwb4"]
 [ext_resource type="Texture2D" uid="uid://75a1ecbt8d0l" path="res://assets/images/moominmama.PNG" id="1_j04um"]
@@ -22,7 +22,8 @@ radius = 468.346
 size = Vector2(37.4, 63.6)
 
 [node name="npc" type="CharacterBody2D"]
-position = Vector2(2536, 743)
+z_index = 1
+position = Vector2(368, 1495)
 scale = Vector2(0.5, 0.5)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

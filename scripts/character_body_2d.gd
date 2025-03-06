@@ -10,18 +10,24 @@ const JUMP_FORCE = -300.0
 @onready var idle_timer = $IdleTimer  # Reference to the idle timer
 @onready var audio_player = $AudioStreamPlayer  # Reference to the music player
 
-const IDLE_TIME_LIMIT = 5.0  # Time before playing sit animation and music
+const IDLE_TIME_LIMIT = 15.0  # Time before playing sit animation and music
 var is_idle = false  # Track if the player is idle
 
 # Load the music file
 var music_track = preload("res://assets/sound/harmonica-solo-2728.mp3")
 
 func _ready():
-	print("✅ Player script is ready!")  
+	await get_tree().process_frame  # Ensure everything loads
+	var saved_pos = Global.get_saved_position()
+	
+	if saved_pos != Vector2.ZERO:  
+		global_position = saved_pos  # ✅ Use global_position instead of position
+		print("✅ Player Spawned at:", global_position)
+	else:
+		print("⚠ No saved position, spawning at default.")
 	idle_timer.wait_time = IDLE_TIME_LIMIT
 	idle_timer.one_shot = true  # Ensure it only triggers once
 	idle_timer.start()
-	print("✅ Idle timer started")
 
 func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("ui_left", "ui_right")
@@ -60,30 +66,24 @@ func reset_idle_timer():
 	is_idle = false  # Reset idle state when moving
 
 func _on_IdleTimer_timeout():
-	print("✅ Idle Timer Triggered! Playing sit animation and music.")
 	play_sit_animation()
 
 func play_sit_animation():
-	print("✅ Sitting animation playing")
 	animated_sprite.play("sitting")
 	await get_tree().process_frame  # Ensure animation updates
-	print("✅ Current animation after frame:", animated_sprite.animation)
 	is_idle = true  # Mark player as idle
 	play_music()
 
 
-func play_music():
-	print("✅ Playing Music...")  
+func play_music():  
 	audio_player.stop()
 	await get_tree().process_frame  # Ensure previous playback is cleared
 	audio_player.stream = music_track
-	audio_player.play()
-	print("✅ Music Playing:", audio_player.playing)  
+	audio_player.play() 
 
 func stop_music():
 	if audio_player.playing:
 		audio_player.stop()
-		print("✅ Stopped Music")
 
 
 func _on_idle_timer_timeout() -> void:
