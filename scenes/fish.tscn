@@ -22,6 +22,7 @@ curve = SubResource("Curve2D_rvinf")
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
 position = Vector2(490.451, -423.212)
 rotation = 1.536
+loop = false
 script = ExtResource("1_sx5di")
 
 [node name="Sprite2D" type="Sprite2D" parent="Path2D/PathFollow2D"]
