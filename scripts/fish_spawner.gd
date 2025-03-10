@@ -16,6 +16,7 @@ func spawn_fish():
 	if fish_scene:
 		var fish = fish_scene.instantiate()
 		add_child(fish)
+		fish.add_to_group("fishes")  # Add fish to group
 
 		var path_follow = fish.get_node("Path2D/PathFollow2D")
 		if path_follow:
