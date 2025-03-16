@@ -1,70 +1,95 @@
 extends Node2D
 
-var is_cast = false  # If hook is in water
-var speed = 200  # Hook movement speed (left/right)
-var cast_depth = 300  # How far the hook drops
-var reel_speed = 150  # Speed when pulling the hook up
-var original_position  # Stores initial position
-var caught_fish = null  # Store reference to caught fish
+var is_cast = false  
+var speed = 200  
+var cast_depth = 300  
+var reel_speed = 150  
+var fight_reel_speed = 50  
+var original_position  
+var fish_caught = null  
+var reeling = false  
+
+var fish_resistance = 40  # Fish fights back downwards
+var pull_strength = 100  # How strong the player can pull the fish upwards
 
 @onready var sprite = $Sprite2D  
 @onready var area = $Area2D  
 
 func _ready():
-	original_position = position  # Store the exact starting position
-	area.connect("area_entered", Callable(self, "_on_area_entered"))
+	original_position = position  
 
 func _process(delta):
+	if reeling:
+		# ✅ Fish always follows hook position
+		update_fish_position()
+
+		# ✅ Reeling controls
+		if Input.is_action_pressed("catch_fish"):
+			position.y -= pull_strength * delta  # Reel the fish upwards
+		else:
+			position.y += fish_resistance * delta  # Fish fights back
+
+		# ✅ Move hook AND fish towards original position
+		position.x = move_toward(position.x, original_position.x, speed * delta)
+
+		# ✅ If the hook reaches the fishing pole, the fight ends
+		if position.y <= original_position.y:
+			finish_reeling()
+		return  # ✅ Disable normal movement when reeling
+
+	# ✅ Normal movement when not reeling
 	if is_cast:
 		if Input.is_action_pressed("ui_left"):
 			position.x -= speed * delta
 		elif Input.is_action_pressed("ui_right"):
 			position.x += speed * delta
-		
+
 		if Input.is_action_pressed("ui_down"):
 			position.y += reel_speed * delta  
-		
-		if Input.is_action_pressed("ui_up"):
-			position.y -= reel_speed * delta 
-
-func return_to_rod():
-	if caught_fish and caught_fish is PathFollow2D:
-		caught_fish.set_process(false)  # Stop automatic movement
-		caught_fish.progress = 0  # Reset movement to stop movement
-		
-		var tween = get_tree().create_tween()
-		tween.tween_property(self, "position", original_position, 0.5)
-		tween.tween_property(caught_fish, "position", original_position, 0.5)
-
-		await tween.finished  # Wait for the movement to complete
-
-		if caught_fish and is_instance_valid(caught_fish):  # Check if still valid before freeing
-			caught_fish.queue_free()  # Remove fish when back at rod
-			caught_fish = null
-	else:
-		print("⚠ Error: Caught fish is not PathFollow2D, got:", caught_fish)
-
-
+		elif Input.is_action_pressed("ui_up"):
+			position.y -= reel_speed * delta  
 
 func cast_hook():
+	if reeling:
+		return  # ✅ Prevent casting while reeling in a fish
+	
 	if not is_cast:
 		is_cast = true
-		smooth_move(Vector2(position.x, original_position.y + cast_depth))
+		smooth_move(Vector2(position.x, original_position.y + cast_depth))  
 	else:
 		is_cast = false
 		return_to_rod()
 
+func return_to_rod():
+	if fish_caught and is_instance_valid(fish_caught):
+		print("🐟 Fish reeling in...")
+		reeling = true  # Start fight
+	else:
+		smooth_move(original_position)  # Fast return if no fish
+
+func finish_reeling():
+	# ✅ When hook reaches original position, the fish is delivered
+	print("🎉 Fish fully reeled in!")
+	if fish_caught and is_instance_valid(fish_caught):
+		fish_caught.queue_free()
+		fish_caught = null
+
+	reeling = false  # Stop fight
+	is_cast = false  # Allow recasting
+	smooth_move(original_position)
+
+func update_fish_position():
+	if fish_caught and is_instance_valid(fish_caught):
+		# ✅ Fish exactly follows hook position
+		fish_caught.global_position = global_position
+
 func smooth_move(target_position: Vector2):
 	var tween = get_tree().create_tween()
-	tween.tween_property(self, "position", target_position, 0.5)  
+	tween.tween_property(self, "position", target_position, 0.5)
 
-
+# Detect fish collision
 func _on_area_2d_area_entered(other_area):
-	var fish_path_follow = other_area.get_parent()  # Get parent of Area2D (should be PathFollow2D)
-
-	if fish_path_follow is PathFollow2D:
-		caught_fish = fish_path_follow  # Store PathFollow2D, not just Area2D
-		print("✅ Fish caught:", caught_fish.name)
-		return_to_rod()
-	else:
-		print("⚠ Error: Expected PathFollow2D but got:", fish_path_follow.name, "| Type:", fish_path_follow.get_class())
+	if other_area.is_in_group("fish") and fish_caught == null:
+		fish_caught = other_area.get_parent()
+		print("✅ Fish caught:", fish_caught.name)
+		reeling = true  

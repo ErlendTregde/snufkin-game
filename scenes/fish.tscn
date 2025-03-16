@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bh4lqdrmxejed"]
+[gd_scene load_steps=5 format=3 uid="uid://dsiap3bhgpfl1"]
 
 [ext_resource type="Script" path="res://scripts/fish.gd" id="1_sx5di"]
 [ext_resource type="Texture2D" uid="uid://ser0fve3tefq" path="res://assets/images/fish.png" id="2_xxc0e"]
