@@ -1,43 +1,95 @@
 extends Node2D
 
-var is_cast = false  # If hook is in water
-var speed = 200  # Hook movement speed (left/right)
-var cast_depth = 300  # How far the hook drops
-var reel_speed = 150  # Speed when pulling the hook up
-var original_position  # Stores initial position
+var is_cast = false  
+var speed = 200  
+var cast_depth = 300  
+var reel_speed = 150  
+var fight_reel_speed = 50  
+var original_position  
+var fish_caught = null  
+var reeling = false  
 
-@onready var sprite = $Sprite2D  # Reference to the hook sprite
+var fish_resistance = 40  # Fish fights back downwards
+var pull_strength = 100  # How strong the player can pull the fish upwards
+
+@onready var sprite = $Sprite2D  
+@onready var area = $Area2D  
 
 func _ready():
-	original_position = position  # Store the exact starting position
+	original_position = position  
 
 func _process(delta):
+	if reeling:
+		# ✅ Fish always follows hook position
+		update_fish_position()
+
+		# ✅ Reeling controls
+		if Input.is_action_pressed("catch_fish"):
+			position.y -= pull_strength * delta  # Reel the fish upwards
+		else:
+			position.y += fish_resistance * delta  # Fish fights back
+
+		# ✅ Move hook AND fish towards original position
+		position.x = move_toward(position.x, original_position.x, speed * delta)
+
+		# ✅ If the hook reaches the fishing pole, the fight ends
+		if position.y <= original_position.y:
+			finish_reeling()
+		return  # ✅ Disable normal movement when reeling
+
+	# ✅ Normal movement when not reeling
 	if is_cast:
-		# Move left and right when in water
 		if Input.is_action_pressed("ui_left"):
 			position.x -= speed * delta
 		elif Input.is_action_pressed("ui_right"):
 			position.x += speed * delta
-		
-		# Move down further when cast
+
 		if Input.is_action_pressed("ui_down"):
 			position.y += reel_speed * delta  
-		
-		# Return to rod if up is pressed
-		if Input.is_action_pressed("ui_up"):
-			return_to_rod()
+		elif Input.is_action_pressed("ui_up"):
+			position.y -= reel_speed * delta  
 
 func cast_hook():
+	if reeling:
+		return  # ✅ Prevent casting while reeling in a fish
+	
 	if not is_cast:
 		is_cast = true
-		smooth_move(Vector2(position.x, original_position.y + cast_depth))  # Smoothly drop the hook
+		smooth_move(Vector2(position.x, original_position.y + cast_depth))  
 	else:
 		is_cast = false
-		return_to_rod()  # Call function to move hook back
+		return_to_rod()
 
 func return_to_rod():
-	smooth_move(original_position)  # Move back smoothly to original position
+	if fish_caught and is_instance_valid(fish_caught):
+		print("🐟 Fish reeling in...")
+		reeling = true  # Start fight
+	else:
+		smooth_move(original_position)  # Fast return if no fish
+
+func finish_reeling():
+	# ✅ When hook reaches original position, the fish is delivered
+	print("🎉 Fish fully reeled in!")
+	if fish_caught and is_instance_valid(fish_caught):
+		fish_caught.queue_free()
+		fish_caught = null
+
+	reeling = false  # Stop fight
+	is_cast = false  # Allow recasting
+	smooth_move(original_position)
+
+func update_fish_position():
+	if fish_caught and is_instance_valid(fish_caught):
+		# ✅ Fish exactly follows hook position
+		fish_caught.global_position = global_position
 
 func smooth_move(target_position: Vector2):
 	var tween = get_tree().create_tween()
-	tween.tween_property(self, "position", target_position, 0.5)  # Move smoothly in 0.5 sec
+	tween.tween_property(self, "position", target_position, 0.5)
+
+# Detect fish collision
+func _on_area_2d_area_entered(other_area):
+	if other_area.is_in_group("fish") and fish_caught == null:
+		fish_caught = other_area.get_parent()
+		print("✅ Fish caught:", fish_caught.name)
+		reeling = true  

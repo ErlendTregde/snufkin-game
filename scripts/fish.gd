@@ -1,10 +1,7 @@
-extends PathFollow2D
+extends Node2D
 
-@export var speed: float = 100.0  # Fish movement speed
+@onready var area = $Area2D  
 
-func _process(delta):
-	progress += speed * delta  # Move fish along path
-
-	if progress_ratio >= 1.0:  # If fish reaches the end of the path
-		print("❌ Fish Reached End & Queued for Removal!")
-		queue_free()  # Schedule fish for removal
+func _ready():
+	add_to_group("fish")  
+	print("🐟 Fish initialized:", name)
