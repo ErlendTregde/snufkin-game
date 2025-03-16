@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://3rnt5jp1dcge"]
+[gd_scene load_steps=16 format=3 uid="uid://3rnt5jp1dcge"]
 
 [ext_resource type="Texture2D" uid="uid://chvsh4u6wskln" path="res://assets/images/brigde.png" id="1_rwkfx"]
 [ext_resource type="Script" path="res://scripts/GoHomebutton.gd" id="2_f4jrf"]
@@ -8,6 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://duxchnu26p35" path="res://assets/images/hook.png" id="6_b6wg5"]
 [ext_resource type="Texture2D" uid="uid://ser0fve3tefq" path="res://assets/images/fish.png" id="7_duh6x"]
 [ext_resource type="Script" path="res://scripts/fish.gd" id="7_ol4hs"]
+[ext_resource type="Script" path="res://scripts/fishing_ui.gd" id="9_0o5v3"]
+[ext_resource type="Texture2D" uid="uid://b3qv2s1kcojwn" path="res://assets/images/bar.png" id="10_8rr0j"]
+[ext_resource type="Texture2D" uid="uid://kf1k7fq82ftf" path="res://assets/images/enter.png" id="11_0bggl"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qw8kf"]
 animations = [{
@@ -25,6 +28,25 @@ radius = 144.222
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1re8p"]
 size = Vector2(201, 102)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qkkeu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_0bggl")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_duh6x")
+}],
+"loop": true,
+"name": &"reeling",
+"speed": 5.0
+}]
 
 [node name="FishingScene" type="Node2D"]
 position = Vector2(0, 1)
@@ -102,5 +124,26 @@ position = Vector2(-1, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FishingZone/Fish/Area2D"]
 shape = SubResource("RectangleShape2D_1re8p")
+
+[node name="FishingUI" type="CanvasLayer" parent="."]
+
+[node name="FishingUIControl" type="Control" parent="FishingUI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("9_0o5v3")
+
+[node name="ReelStrengthBar" type="TextureProgressBar" parent="FishingUI/FishingUIControl"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture_progress = ExtResource("10_8rr0j")
+
+[node name="ReelIndicator" type="AnimatedSprite2D" parent="FishingUI/FishingUIControl"]
+z_index = 2
+position = Vector2(1123, 407)
+sprite_frames = SubResource("SpriteFrames_qkkeu")
+animation = &"idle"
 
 [connection signal="area_entered" from="FishingPlayer/Hook/Area2D" to="FishingPlayer/Hook" method="_on_area_2d_area_entered"]

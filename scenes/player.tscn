@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://bkcpahqm2o2k4"]
+[gd_scene load_steps=14 format=3 uid="uid://bkcpahqm2o2k4"]
 
 [ext_resource type="Script" path="res://scripts/character_body_2d.gd" id="1_qlf6j"]
 [ext_resource type="Texture2D" uid="uid://bis61ahujp6vo" path="res://assets/images/snifkincolour.png" id="2_e34ov"]
 [ext_resource type="AudioStream" uid="uid://beitwfwu3w8kb" path="res://assets/sound/harmonica-solo-2728.mp3" id="3_7cdpl"]
 [ext_resource type="Texture2D" uid="uid://b6jc4ue3wxmsi" path="res://assets/images/snufkincolour1.png" id="3_ci340"]
+[ext_resource type="PackedScene" uid="uid://bea8oskb0moxg" path="res://scenes/rainlayer.tscn" id="3_fkqio"]
 [ext_resource type="Texture2D" uid="uid://ce3ht0hvmbg0w" path="res://assets/images/snufkincolour2.png" id="4_feedy"]
 [ext_resource type="Texture2D" uid="uid://d2b84lllv414f" path="res://assets/images/running1Right.png" id="6_qj0qo"]
 [ext_resource type="Texture2D" uid="uid://cicib5a20tovt" path="res://assets/images/running2Right.png" id="7_bxkpm"]
@@ -108,6 +109,9 @@ position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
+
+[node name="RainLayer" parent="CharacterBody2D/Camera2D" instance=ExtResource("3_fkqio")]
+visible = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
 position = Vector2(584, 461)
