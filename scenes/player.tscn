@@ -102,7 +102,7 @@ z_index = 1
 position = Vector2(578.5, 467.5)
 shape = SubResource("RectangleShape2D_iwhxa")
 
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D" groups=["player_camera"]]
 z_index = 1
 position = Vector2(577, 326)
 position_smoothing_enabled = true

@@ -42,6 +42,7 @@ shape = SubResource("CircleShape2D_ssxb7")
 autostart = true
 
 [node name="Dialouge" parent="." instance=ExtResource("3_rfem8")]
+z_index = 101
 dialogue_file = "res://dialague/moominMama.json"
 metadata/_edit_use_anchors_ = true
 

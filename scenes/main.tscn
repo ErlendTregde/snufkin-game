@@ -99,6 +99,7 @@ texture = ExtResource("5_7xatm")
 stretch_mode = 1
 
 [node name="npc" parent="." instance=ExtResource("5_iw87x")]
+z_index = 1000
 position = Vector2(3351, 990)
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="npc"]
