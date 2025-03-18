@@ -135,9 +135,12 @@ offset_bottom = 40.0
 script = ExtResource("9_0o5v3")
 
 [node name="ReelStrengthBar" type="TextureProgressBar" parent="FishingUI/FishingUIControl"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 5.214
+anchor_bottom = 25.6
+offset_right = -168.56
+offset_bottom = -984.0
 texture_progress = ExtResource("10_8rr0j")
 
 [node name="ReelIndicator" type="AnimatedSprite2D" parent="FishingUI/FishingUIControl"]

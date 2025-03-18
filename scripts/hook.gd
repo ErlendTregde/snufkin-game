@@ -8,15 +8,17 @@ var fight_reel_speed = 50
 var original_position  
 var fish_caught = null  
 var reeling = false  
-var fish_start_y = 0  # Initialize fish's starting Y position
-
+var fish_start_y = null  # ✅ Initialize fish's starting Y position
 
 var fish_resistance = 40  # Fish fights back downwards
 var pull_strength = 100  # How strong the player can pull the fish upwards
 
 @onready var sprite = $Sprite2D  
 @onready var area = $Area2D  
-@onready var fishing_ui = get_node("/root/FishingScene/FishingUI/FishingUIControl")  # 🎣 Access Fishing UI
+@onready var fishing_ui = get_node("/root/FishingScene/FishingUI/FishingUIControl")
+@onready var reel_indicator = fishing_ui.get_node("ReelIndicator")  # ✅ Correct path
+
+
 
 func _ready():
 	original_position = position  
@@ -27,16 +29,11 @@ func _process(delta):
 		update_fish_position()
 		
 		# ✅ Update UI reel progress
-		var progress = (original_position.y - position.y) / (original_position.y - cast_depth)
-		
-		# ✅ Calculate progress using actual distance
 		fishing_ui.update_reel_progress(
-			position.y,         # Current hook Y position
-			fish_caught.position.y,  # Where the fish originally spawned
-			original_position.y # Where the hook returns (rod position)
+			position.y,        # Hook’s current Y position
+			original_position.y,  # Hook’s starting Y position
+			fish_start_y       # Fish’s starting Y position
 		)
-
-
 
 		# ✅ Reeling controls (button changes animation)
 		if Input.is_action_pressed("catch_fish"):
@@ -79,14 +76,12 @@ func cast_hook():
 
 func return_to_rod():
 	if fish_caught and is_instance_valid(fish_caught):
-		print("🐟 Fish reeling in...")
-		reeling = true  # Start fight
-		fishing_ui.show_ui()  # 🔥 Show fishing UI & play "idle" immediately
-		fishing_ui.reset_reel_indicator()  # ✅ Ensure idle animation starts at the beginning
+		print("🐟 Fish reeling in...")  
+		reeling = true  # Start fight  
+		fishing_ui.show_ui()  # 🔥 Show fishing UI & play "idle" immediately  
+		fishing_ui.reset_reel_indicator()  # ✅ Ensure idle animation starts at the beginning  
 	else:
-		smooth_move(original_position)  # Fast return if no fish
-
-
+		smooth_move(original_position)  # Fast return if no fish  
 
 func finish_reeling():
 	# ✅ When hook reaches original position, the fish is delivered
@@ -109,6 +104,11 @@ func smooth_move(target_position: Vector2):
 	var tween = get_tree().create_tween()
 	tween.tween_property(self, "position", target_position, 0.5)
 
+func reset_reel_indicator():
+	if reel_indicator:
+		reel_indicator.play("idle")  # 🎣 Switch back to idle animation when not pressing
+
+
 # Detect fish collision
 func _on_area_2d_area_entered(other_area):
 	if other_area.is_in_group("fish") and fish_caught == null:
@@ -117,4 +117,3 @@ func _on_area_2d_area_entered(other_area):
 		reeling = true
 		fish_start_y = fish_caught.global_position.y  # ✅ Store correct fish start position
 		fishing_ui.show_ui()  # Show UI immediately
-		fishing_ui.update_reel_progress(position.y, fish_start_y, original_position.y)  # Update UI right away
