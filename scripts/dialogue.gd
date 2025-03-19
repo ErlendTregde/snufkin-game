@@ -6,14 +6,20 @@ var dialogue = []
 var current_dialogue_id = -1
 var active_npc = null
 var npc_sprite_path = {}
+var player_camera = null
+var player_camera_original_position = Vector2.ZERO  # Store original position
 
 @onready var left_character = $LeftCharacter
 @onready var right_character = $RightCharacter
 @onready var name_label = $NinePatchRect/Name
 @onready var text_label = $NinePatchRect/Text
 @onready var dialogue_camera = $DialogueCamera 
+@onready var back_button = $UIButton 
 
 func _ready():
+	player_camera = get_tree().get_first_node_in_group("player_camera")
+	if player_camera:
+		player_camera.make_current()  # Ensure the player's camera is active at start
 	# Preload NPC sprites for easy swapping
 	npc_sprite_path = {
 		"Moomin mama": preload("res://dialague/Images/idleSmokeing.png"),
@@ -21,6 +27,8 @@ func _ready():
 	}
 	right_character.texture = preload("res://dialague/Images/idleSmokeing.png") # Snufkin always on the right
 	visible = false  # Hide the UI at start
+	back_button.pressed.connect(_on_button_pressed)
+	back_button.visible = true  # Show the button when dialogue is open
 
 func load_dialogue():
 	var file = FileAccess.open(dialogue_file, FileAccess.READ)
@@ -43,12 +51,16 @@ func start_dialogue(npc):
 	load_dialogue()
 	current_dialogue_id = -1
 	visible = true  # Show UI
+	back_button.visible = true  # Show the back button
 
-	# Get player's camera
-	var game_camera = get_tree().get_first_node_in_group("player_camera")
-	if game_camera and game_camera is Camera2D:
+	# Get player's camera and store its position
+	player_camera = get_tree().get_first_node_in_group("player_camera") 
+	if player_camera and player_camera is Camera2D:
+		player_camera_original_position = player_camera.position  # Store original position
+		
+		# Move camera to dialogue position
 		var tween = get_tree().create_tween()  # Smooth transition
-		tween.tween_property(game_camera, "position", dialogue_camera.position, 0.5).set_trans(Tween.TRANS_CUBIC)
+		tween.tween_property(player_camera, "position", dialogue_camera.position, 0.5).set_trans(Tween.TRANS_CUBIC)
 		await tween.finished  # Wait for transition to complete
 
 		dialogue_camera.make_current()  # Switch to dialogue camera
@@ -59,7 +71,6 @@ func start_dialogue(npc):
 		player.set_physics_process(false)  # Disable physics (movement)
 		player.set_process_input(false)  # Disable input handling
 
-	# Ensure UI stays on top
 	z_index = 100
 	next_script()
 
@@ -88,15 +99,17 @@ func next_script():
 func end_dialogue():
 	visible = false
 	active_npc = null
+	back_button.visible = false  # Hide the button when closing dialogue
 
-	# Get player's camera
-	var game_camera = get_tree().get_first_node_in_group("player_camera")
-	if game_camera and game_camera is Camera2D:
-		var tween = get_tree().create_tween()  # Smooth transition back
-		tween.tween_property(dialogue_camera, "position", game_camera.position, 0.5).set_trans(Tween.TRANS_CUBIC)
-		await tween.finished
+	# Ensure we have the correct reference to the player camera
+	player_camera = get_tree().get_first_node_in_group("player_camera")
+	if player_camera and player_camera is Camera2D:
+		# Move camera back to original position
+		var tween = get_tree().create_tween()
+		tween.tween_property(player_camera, "position", player_camera_original_position, 0.5).set_trans(Tween.TRANS_CUBIC)
+		await tween.finished  # Wait for transition to complete
 
-		game_camera.make_current()  # Switch back to player camera
+		player_camera.make_current()  # Switch back to the player's camera
 
 	# Re-enable player movement
 	var player = get_tree().get_first_node_in_group("player")
@@ -105,6 +118,9 @@ func end_dialogue():
 		player.set_process_input(true)  # Enable input handling
 
 	get_tree().paused = false  # Unpause the game
+
+
+
 
 
 
@@ -121,3 +137,7 @@ func show_transition():
 		await tween.finished  # Wait for the transition to complete
 
 	dialogue_camera.current = true  # Switch to dialogue camera
+
+
+func _on_button_pressed():
+	end_dialogue()

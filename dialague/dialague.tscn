@@ -67,7 +67,7 @@ offset_bottom = -1612.0
 texture = ExtResource("3_s5fl3")
 stretch_mode = 1
 
-[node name="UiButton" type="TextureRect" parent="."]
+[node name="Uidown" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = -5842.0
 offset_top = -488.0
@@ -85,3 +85,13 @@ texture = ExtResource("5_u5p5b")
 position = Vector2(-464, 1474)
 scale = Vector2(20.6445, 5.86719)
 texture = ExtResource("5_u5p5b")
+
+[node name="UIButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = -254.0
+offset_top = -1632.0
+offset_right = -79.0
+offset_bottom = -1520.0
+text = "Back"
+
+[connection signal="pressed" from="UIButton" to="." method="_on_button_pressed"]
