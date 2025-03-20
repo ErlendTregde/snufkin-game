@@ -27,7 +27,9 @@ func _ready():
 	}
 	right_character.texture = preload("res://dialague/Images/idleSmokeing.png") # Snufkin always on the right
 	visible = false  # Hide the UI at start
-	back_button.pressed.connect(_on_button_pressed)
+	if not back_button.pressed.is_connected(_on_button_pressed):
+		back_button.pressed.connect(_on_button_pressed)
+		
 	back_button.visible = true  # Show the button when dialogue is open
 
 func load_dialogue():
@@ -63,13 +65,18 @@ func start_dialogue(npc):
 		tween.tween_property(player_camera, "position", dialogue_camera.position, 0.5).set_trans(Tween.TRANS_CUBIC)
 		await tween.finished  # Wait for transition to complete
 
-		dialogue_camera.make_current()  # Switch to dialogue camera
+		dialogue_camera.call_deferred("make_current")
 
 	# Disable player movement
 	var player = get_tree().get_first_node_in_group("player")
 	if player:
 		player.set_physics_process(false)  # Disable physics (movement)
 		player.set_process_input(false)  # Disable input handling
+
+		# If using velocity for movement, set velocity to zero
+		if "velocity" in player:
+			player.velocity = Vector2.ZERO
+			player.move_and_slide()  # Apply immediately to stop movement
 
 	z_index = 100
 	next_script()
@@ -114,10 +121,11 @@ func end_dialogue():
 	# Re-enable player movement
 	var player = get_tree().get_first_node_in_group("player")
 	if player:
-		player.set_physics_process(true)  # Enable physics (movement)
-		player.set_process_input(true)  # Enable input handling
+		player.set_physics_process(true)  # Re-enable physics (movement)
+		player.set_process_input(true)  # Re-enable input handling
 
 	get_tree().paused = false  # Unpause the game
+
 
 
 

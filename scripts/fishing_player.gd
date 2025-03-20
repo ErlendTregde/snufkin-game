@@ -4,6 +4,7 @@ extends Node2D
 
 var saved_position = Vector2.ZERO  # Default value is (0,0)
 
+
 func save_position(new_position):
 	saved_position = new_position
 	print("💾 Position Saved:", saved_position)  # Debugging
