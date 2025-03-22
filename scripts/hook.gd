@@ -101,8 +101,12 @@ func update_fish_position():
 		fish_caught.global_position = global_position
 
 func smooth_move(target_position: Vector2):
+	if not is_inside_tree():
+		return  # ✅ Prevent moving if the object is deleted
+
 	var tween = get_tree().create_tween()
 	tween.tween_property(self, "position", target_position, 0.5)
+
 
 func reset_reel_indicator():
 	if reel_indicator:

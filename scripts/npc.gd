@@ -1,6 +1,8 @@
 extends Area2D
 
 @export var dialogue_control_path: NodePath
+@export var npc_name: String = "Moomin mama"  # Set per NPC in the inspector
+
 var dialogue_control
 
 func _ready():

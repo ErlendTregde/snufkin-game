@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bkcpahqm2o2k4"]
+[gd_scene load_steps=15 format=3 uid="uid://bkcpahqm2o2k4"]
 
 [ext_resource type="Script" path="res://scripts/character_body_2d.gd" id="1_qlf6j"]
 [ext_resource type="Texture2D" uid="uid://bis61ahujp6vo" path="res://assets/images/snifkincolour.png" id="2_e34ov"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://b7w0r68a46j20" path="res://assets/images/sittingIdle1.png" id="8_m535d"]
 [ext_resource type="Texture2D" uid="uid://b55qh6ch23dlq" path="res://assets/images/running3Right.png" id="8_r6sm0"]
 [ext_resource type="Texture2D" uid="uid://cla36a8ioie2l" path="res://assets/images/sittingIdle2.png" id="9_jj716"]
+[ext_resource type="Texture2D" uid="uid://dxq4efhlrxub2" path="res://dialague/Images/idleSmokeing.png" id="12_3xa2k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iwhxa"]
 size = Vector2(101, 161)
@@ -79,6 +80,14 @@ animations = [{
 "loop": true,
 "name": &"sitting",
 "speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_3xa2k")
+}],
+"loop": true,
+"name": &"smoking",
+"speed": 5.0
 }]
 
 [node name="Player" type="Node2D" groups=["Player"]]
@@ -102,7 +111,7 @@ z_index = 1
 position = Vector2(578.5, 467.5)
 shape = SubResource("RectangleShape2D_iwhxa")
 
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D" groups=["player_camera"]]
 z_index = 1
 position = Vector2(577, 326)
 position_smoothing_enabled = true
@@ -114,9 +123,11 @@ drag_vertical_enabled = true
 visible = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+z_index = 5
 position = Vector2(584, 461)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_u33fb")
-animation = &"idle"
+animation = &"smoking"
+offset = Vector2(0, -7)
 
 [connection signal="timeout" from="CharacterBody2D/IdleTimer" to="CharacterBody2D" method="_on_idle_timer_timeout"]

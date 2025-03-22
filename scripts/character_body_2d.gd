@@ -12,6 +12,9 @@ const JUMP_FORCE = -300.0
 
 const IDLE_TIME_LIMIT = 15.0  # Time before playing sit animation and music
 var is_idle = false  # Track if the player is idle
+var toggle_idle = false 
+var last_idle = "idle"
+var was_moving = false
 
 # Load the music file
 var music_track = preload("res://assets/sound/harmonica-solo-2728.mp3")
@@ -43,22 +46,28 @@ func _physics_process(delta: float) -> void:
 		return  
 
 	if is_on_floor():
-		if direction == 0:
+		if direction == 0:  # Player stopped moving
+			if was_moving:  # Only pick an idle animation when stopping
+				last_idle = "idle" if randi() % 2 == 0 else "smoking"
+
 			if idle_timer.time_left == 0 and not is_idle:
 				play_sit_animation()
 			else:
-				animated_sprite.play("idle")
+				animated_sprite.play(last_idle)  # Play the selected idle animation
+
 			animated_sprite.flip_h = false  # Ensure idle is not flipped
+			was_moving = false  # Mark that we're now idle
 		else:
 			animated_sprite.play("run_right")
 			animated_sprite.flip_h = direction < 0
 			reset_idle_timer()
+			was_moving = true  # Mark that we're moving
 	else:
 		animated_sprite.play("jump")
 		reset_idle_timer()
+		was_moving = true  # Mark that we're moving
 
 	move_and_slide()
-
 
 func reset_idle_timer():
 	idle_timer.start()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://3rnt5jp1dcge"]
+[gd_scene load_steps=18 format=3 uid="uid://3rnt5jp1dcge"]
 
 [ext_resource type="Texture2D" uid="uid://chvsh4u6wskln" path="res://assets/images/brigde.png" id="1_rwkfx"]
 [ext_resource type="Script" path="res://scripts/GoHomebutton.gd" id="2_f4jrf"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/hook.gd" id="5_se1cd"]
 [ext_resource type="Texture2D" uid="uid://duxchnu26p35" path="res://assets/images/hook.png" id="6_b6wg5"]
 [ext_resource type="Texture2D" uid="uid://ser0fve3tefq" path="res://assets/images/fish.png" id="7_duh6x"]
+[ext_resource type="Script" path="res://scripts/FishingZone.gd" id="7_n8jnv"]
 [ext_resource type="Script" path="res://scripts/fish.gd" id="7_ol4hs"]
 [ext_resource type="Script" path="res://scripts/fishing_ui.gd" id="9_0o5v3"]
 [ext_resource type="Texture2D" uid="uid://b3qv2s1kcojwn" path="res://assets/images/bar.png" id="10_8rr0j"]
@@ -28,6 +29,9 @@ radius = 144.222
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1re8p"]
 size = Vector2(201, 102)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_57s3h"]
+size = Vector2(446, 579)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qkkeu"]
 animations = [{
@@ -110,9 +114,10 @@ shape = SubResource("CircleShape2D_k3orv")
 
 [node name="FishingZone" type="Node2D" parent="."]
 position = Vector2(657, 843)
+script = ExtResource("7_n8jnv")
 
 [node name="Fish" type="Node2D" parent="FishingZone"]
-position = Vector2(2, 2)
+position = Vector2(-552, -173)
 script = ExtResource("7_ol4hs")
 
 [node name="Sprite2D" type="Sprite2D" parent="FishingZone/Fish"]
@@ -124,6 +129,13 @@ position = Vector2(-1, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FishingZone/Fish/Area2D"]
 shape = SubResource("RectangleShape2D_1re8p")
+
+[node name="Area2D" type="Area2D" parent="FishingZone"]
+position = Vector2(-112, -337)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FishingZone/Area2D"]
+position = Vector2(12, 195.5)
+shape = SubResource("RectangleShape2D_57s3h")
 
 [node name="FishingUI" type="CanvasLayer" parent="."]
 
