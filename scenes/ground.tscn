@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dgtu2mxhpy1av"]
 
-[ext_resource type="Texture2D" uid="uid://l1vo13wfcpcu" path="res://assets/images/theground.png" id="1_upgf7"]
+[ext_resource type="Texture2D" uid="uid://cf77lcwhnhrqh" path="res://assets/images/thegroundfrfr.png" id="1_pq7ue"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kwelb"]
 size = Vector2(14386, 59)
@@ -15,9 +15,9 @@ shape = SubResource("RectangleShape2D_kwelb")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 z_index = 5
-offset_left = -1323.0
+offset_left = -1135.0
 offset_top = 505.0
 offset_right = 4260.0
-offset_bottom = 1901.0
-texture = ExtResource("1_upgf7")
+offset_bottom = 1529.0
+texture = ExtResource("1_pq7ue")
 stretch_mode = 1

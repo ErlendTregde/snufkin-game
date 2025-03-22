@@ -44,4 +44,4 @@ catch_fish={
 
 [rendering]
 
-environment/defaults/default_clear_color=Color(0, 0, 0, 1)
+environment/defaults/default_clear_color=Color(0.31982, 0.527251, 1, 1)
