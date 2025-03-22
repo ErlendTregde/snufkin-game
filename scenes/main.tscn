@@ -1,13 +1,13 @@
-[gd_scene load_steps=16 format=3 uid="uid://dc6uqrjmswp4j"]
+[gd_scene load_steps=16 format=3 uid="uid://d0jqutw3c62wv"]
 
 [ext_resource type="Texture2D" uid="uid://cfwm52xurxriy" path="res://assets/images/Mountan.png" id="1_52jxg"]
-[ext_resource type="PackedScene" uid="uid://bkcpahqm2o2k4" path="res://scenes/player.tscn" id="1_g03jv"]
+[ext_resource type="PackedScene" uid="uid://cu4vgvuaexi2s" path="res://scenes/player.tscn" id="1_g03jv"]
 [ext_resource type="Texture2D" uid="uid://chmjgplg17fty" path="res://assets/images/Woodcolour.png" id="2_k03au"]
 [ext_resource type="Script" path="res://scripts/button.gd" id="3_0tuu4"]
 [ext_resource type="Texture2D" uid="uid://bblr56ahkr33k" path="res://assets/images/treeBackgroundfrfr.png" id="3_po7qr"]
-[ext_resource type="PackedScene" uid="uid://dgtu2mxhpy1av" path="res://scenes/ground.tscn" id="4_hijc5"]
-[ext_resource type="PackedScene" uid="uid://bea8oskb0moxg" path="res://scenes/rainlayer.tscn" id="4_shs03"]
-[ext_resource type="PackedScene" uid="uid://dqjbxor61v60u" path="res://scenes/npc.tscn" id="5_iw87x"]
+[ext_resource type="PackedScene" uid="uid://lete45k7266y" path="res://scenes/ground.tscn" id="4_hijc5"]
+[ext_resource type="PackedScene" uid="uid://cqchuxoe2q16a" path="res://scenes/rainlayer.tscn" id="4_shs03"]
+[ext_resource type="PackedScene" uid="uid://cyxq3fmkosw2b" path="res://scenes/npc.tscn" id="5_iw87x"]
 [ext_resource type="Texture2D" uid="uid://b8idpc6364s4t" path="res://assets/images/flowers1.png" id="5_rnkrj"]
 [ext_resource type="Texture2D" uid="uid://drlor8lanstwy" path="res://assets/images/MoominHouse.png" id="10_006dt"]
 [ext_resource type="Script" path="res://scripts/FishingInteraction.gd" id="11_cufjj"]
@@ -34,9 +34,9 @@ motion_scale = Vector2(0.1, 0.1)
 texture_filter = 3
 texture_repeat = 1
 offset_left = -2552.0
-offset_top = 186.0
+offset_top = 257.0
 offset_right = 4548.0
-offset_bottom = 745.0
+offset_bottom = 816.0
 mouse_filter = 2
 texture = ExtResource("1_52jxg")
 stretch_mode = 1
