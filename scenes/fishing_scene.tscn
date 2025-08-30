@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://3rnt5jp1dcge"]
+[gd_scene load_steps=18 format=3 uid="uid://bgomool2qdvok"]
 
 [ext_resource type="Texture2D" uid="uid://chvsh4u6wskln" path="res://assets/images/brigde.png" id="1_rwkfx"]
 [ext_resource type="Script" path="res://scripts/GoHomebutton.gd" id="2_f4jrf"]
