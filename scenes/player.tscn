@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://cu4vgvuaexi2s"]
 
-[ext_resource type="Script" path="res://scripts/character_body_2d.gd" id="1_qlf6j"]
+[ext_resource type="Script" uid="uid://dof1top16n4s7" path="res://scripts/character_body_2d.gd" id="1_qlf6j"]
 [ext_resource type="Texture2D" uid="uid://bis61ahujp6vo" path="res://assets/images/snifkincolour.png" id="2_e34ov"]
 [ext_resource type="AudioStream" uid="uid://beitwfwu3w8kb" path="res://assets/sound/harmonica-solo-2728.mp3" id="3_7cdpl"]
 [ext_resource type="Texture2D" uid="uid://b6jc4ue3wxmsi" path="res://assets/images/snufkincolour1.png" id="3_ci340"]

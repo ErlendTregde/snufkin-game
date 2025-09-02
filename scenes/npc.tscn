@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://cyxq3fmkosw2b"]
 
-[ext_resource type="Script" path="res://scripts/npc.gd" id="1_ikwb4"]
+[ext_resource type="Script" uid="uid://68hyd5t84ktd" path="res://scripts/npc.gd" id="1_ikwb4"]
 [ext_resource type="Texture2D" uid="uid://75a1ecbt8d0l" path="res://assets/images/moominmama.PNG" id="1_j04um"]
 [ext_resource type="PackedScene" uid="uid://cauib76nahvnp" path="res://dialague/dialague.tscn" id="3_rfem8"]
 

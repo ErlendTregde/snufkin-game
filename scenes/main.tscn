@@ -3,14 +3,14 @@
 [ext_resource type="Texture2D" uid="uid://cfwm52xurxriy" path="res://assets/images/Mountan.png" id="1_52jxg"]
 [ext_resource type="PackedScene" uid="uid://cu4vgvuaexi2s" path="res://scenes/player.tscn" id="1_g03jv"]
 [ext_resource type="Texture2D" uid="uid://chmjgplg17fty" path="res://assets/images/Woodcolour.png" id="2_k03au"]
-[ext_resource type="Script" path="res://scripts/button.gd" id="3_0tuu4"]
+[ext_resource type="Script" uid="uid://b6vu5x0luntm8" path="res://scripts/button.gd" id="3_0tuu4"]
 [ext_resource type="Texture2D" uid="uid://bblr56ahkr33k" path="res://assets/images/treeBackgroundfrfr.png" id="3_po7qr"]
 [ext_resource type="Texture2D" uid="uid://cf633hn8t5vlm" path="res://assets/images/MoominHouseColour.png" id="4_e5bnu"]
 [ext_resource type="PackedScene" uid="uid://lete45k7266y" path="res://scenes/ground.tscn" id="4_hijc5"]
 [ext_resource type="PackedScene" uid="uid://cqchuxoe2q16a" path="res://scenes/rainlayer.tscn" id="4_shs03"]
 [ext_resource type="PackedScene" uid="uid://cyxq3fmkosw2b" path="res://scenes/npc.tscn" id="5_iw87x"]
 [ext_resource type="Texture2D" uid="uid://b8idpc6364s4t" path="res://assets/images/flowers1.png" id="5_rnkrj"]
-[ext_resource type="Script" path="res://scripts/FishingInteraction.gd" id="11_cufjj"]
+[ext_resource type="Script" uid="uid://biitei8kw21e" path="res://scripts/FishingInteraction.gd" id="11_cufjj"]
 [ext_resource type="Texture2D" uid="uid://chvsh4u6wskln" path="res://assets/images/brigde.png" id="11_guwuy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pu8s4"]
@@ -131,6 +131,7 @@ z_index = 10
 position = Vector2(1, -40)
 
 [node name="Ground" parent="." instance=ExtResource("4_hijc5")]
+position = Vector2(-23, -36)
 
 [node name="Brigde" type="Sprite2D" parent="."]
 z_index = 1
