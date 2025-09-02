@@ -77,8 +77,8 @@ z_index = 2
 
 [node name="MoominHouse" type="Sprite2D" parent="ParallaxBackground/MoominHouse"]
 z_index = 2
-position = Vector2(2960, 706)
-scale = Vector2(1.46934, 1.46934)
+position = Vector2(2588, 683)
+scale = Vector2(1.5, 1.5)
 texture = ExtResource("4_e5bnu")
 
 [node name="ParallaxForeground" type="ParallaxBackground" parent="."]
@@ -99,7 +99,6 @@ texture = ExtResource("5_rnkrj")
 stretch_mode = 1
 
 [node name="npc" parent="." instance=ExtResource("5_iw87x")]
-visible = false
 z_index = 1000
 position = Vector2(3351, 990)
 

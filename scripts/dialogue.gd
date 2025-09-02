@@ -51,21 +51,36 @@ func start_dialogue(npc):
 
 	active_npc = npc
 	load_dialogue()
-	current_dialogue_id = -1
-	visible = true  # Show UI
-	back_button.visible = true  # Show the back button
-
-	# Get player's camera and store its position
-	player_camera = get_tree().get_first_node_in_group("player_camera") 
-	if player_camera and player_camera is Camera2D:
-		player_camera_original_position = player_camera.position  # Store original position
+	
+	if dialogue == null or dialogue.size() == 0:
+		print("No dialogue data loaded!")
+		return
 		
-		# Move camera to dialogue position
-		var tween = get_tree().create_tween()  # Smooth transition
-		tween.tween_property(player_camera, "position", dialogue_camera.position, 0.5).set_trans(Tween.TRANS_CUBIC)
-		await tween.finished  # Wait for transition to complete
-
-		dialogue_camera.call_deferred("make_current")
+	current_dialogue_id = -1
+	
+	# Setup UI
+	visible = true
+	back_button.visible = true
+	
+	# Update character sprites
+	if npc.npc_name in npc_sprite_path:
+		left_character.texture = npc_sprite_path[npc.npc_name]
+		left_character.visible = true
+	right_character.visible = true
+	
+	# Camera transition
+	player_camera = get_tree().get_first_node_in_group("player_camera")
+	if player_camera and player_camera is Camera2D:
+		player_camera_original_position = player_camera.position
+		
+		# Smooth camera transition
+		var tween = get_tree().create_tween()
+		tween.set_ease(Tween.EASE_IN_OUT)
+		tween.set_trans(Tween.TRANS_CUBIC)
+		tween.tween_property(player_camera, "position", dialogue_camera.position, 0.5)
+		await tween.finished
+		
+		dialogue_camera.make_current()
 
 	# Disable player movement
 	var player = get_tree().get_first_node_in_group("player")
@@ -104,19 +119,30 @@ func next_script():
 		print("Error: Missing 'name' or 'text' in dialogue entry!")
 	
 func end_dialogue():
+	if not visible:
+		return
+		
+	# Hide UI elements
 	visible = false
+	back_button.visible = false
+	left_character.visible = false
+	right_character.visible = false
+	
+	# Reset dialogue state
 	active_npc = null
-	back_button.visible = false  # Hide the button when closing dialogue
-
-	# Ensure we have the correct reference to the player camera
+	current_dialogue_id = -1
+	
+	# Re-enable player camera and movement
 	player_camera = get_tree().get_first_node_in_group("player_camera")
 	if player_camera and player_camera is Camera2D:
-		# Move camera back to original position
+		player_camera.make_current()
+		
+		# Smooth camera transition back
 		var tween = get_tree().create_tween()
-		tween.tween_property(player_camera, "position", player_camera_original_position, 0.5).set_trans(Tween.TRANS_CUBIC)
-		await tween.finished  # Wait for transition to complete
-
-		player_camera.make_current()  # Switch back to the player's camera
+		tween.set_ease(Tween.EASE_IN_OUT)
+		tween.set_trans(Tween.TRANS_CUBIC)
+		tween.tween_property(player_camera, "position", player_camera_original_position, 0.5)
+		await tween.finished
 
 	# Re-enable player movement
 	var player = get_tree().get_first_node_in_group("player")

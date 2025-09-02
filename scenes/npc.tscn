@@ -16,10 +16,10 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ssxb7"]
-radius = 468.346
+radius = 576.347
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m5ceg"]
-size = Vector2(37.4, 63.6)
+size = Vector2(37.6, 63.4)
 
 [node name="npc" type="CharacterBody2D"]
 z_index = 1
@@ -47,6 +47,9 @@ dialogue_file = "res://dialague/moominMama.json"
 metadata/_edit_use_anchors_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(7, 12)
+position = Vector2(-10, -9)
 scale = Vector2(10, 10)
 shape = SubResource("RectangleShape2D_m5ceg")
+
+[connection signal="body_entered" from="chat_detection_area" to="chat_detection_area" method="_on_chat_detection_area_body_entered"]
+[connection signal="body_exited" from="chat_detection_area" to="chat_detection_area" method="_on_chat_detection_area_body_exited"]
