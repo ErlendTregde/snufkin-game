@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d0jqutw3c62wv"]
+[gd_scene load_steps=18 format=3 uid="uid://d0jqutw3c62wv"]
 
 [ext_resource type="Texture2D" uid="uid://cfwm52xurxriy" path="res://assets/images/Mountan.png" id="1_52jxg"]
 [ext_resource type="PackedScene" uid="uid://cu4vgvuaexi2s" path="res://scenes/player.tscn" id="1_g03jv"]
@@ -10,8 +10,12 @@
 [ext_resource type="PackedScene" uid="uid://cqchuxoe2q16a" path="res://scenes/rainlayer.tscn" id="4_shs03"]
 [ext_resource type="PackedScene" uid="uid://cyxq3fmkosw2b" path="res://scenes/npc.tscn" id="5_iw87x"]
 [ext_resource type="Texture2D" uid="uid://b8idpc6364s4t" path="res://assets/images/flowers1.png" id="5_rnkrj"]
+[ext_resource type="Script" path="res://scripts/HouseInteraction.gd" id="5_trceg"]
 [ext_resource type="Script" uid="uid://biitei8kw21e" path="res://scripts/FishingInteraction.gd" id="11_cufjj"]
 [ext_resource type="Texture2D" uid="uid://chvsh4u6wskln" path="res://assets/images/brigde.png" id="11_guwuy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a8y0u"]
+size = Vector2(28.871292, 16.789165)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pu8s4"]
 size = Vector2(6, 20)
@@ -23,6 +27,26 @@ size = Vector2(385.5, 276)
 
 [node name="Main" type="Node2D"]
 z_index = 9
+
+[node name="HouseEntrance" type="Area2D" parent="."]
+position = Vector2(2588, 683)
+scale = Vector2(1.5, 1.5)
+script = ExtResource("5_trceg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HouseEntrance"]
+position = Vector2(9.666626, 238.66666)
+rotation = -3.1415925
+scale = Vector2(4.0409255, -6.1944723)
+shape = SubResource("RectangleShape2D_a8y0u")
+
+[node name="Label" type="Label" parent="HouseEntrance"]
+visibility_layer = 17
+z_index = 3
+offset_left = -37.333336
+offset_top = 150.0
+offset_right = 83.666664
+offset_bottom = 173.0
+text = "Press E to enter"
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 layer = -10
@@ -99,6 +123,7 @@ texture = ExtResource("5_rnkrj")
 stretch_mode = 1
 
 [node name="npc" parent="." instance=ExtResource("5_iw87x")]
+visible = false
 z_index = 1000
 position = Vector2(3351, 990)
 
@@ -163,6 +188,8 @@ text = "\"Press E to go fishing"
 
 [node name="Player" parent="." instance=ExtResource("1_g03jv")]
 
+[connection signal="body_entered" from="HouseEntrance" to="HouseEntrance" method="_on_body_entered"]
+[connection signal="body_exited" from="HouseEntrance" to="HouseEntrance" method="_on_body_exited"]
 [connection signal="button_down" from="Sprite2D/Button" to="Sprite2D/Button" method="_on_button_button_down"]
 [connection signal="button_up" from="Sprite2D/Button" to="Sprite2D/Button" method="_on_button_button_up"]
 [connection signal="body_entered" from="Brigde/Area2D" to="Brigde/Area2D" method="_on_body_entered"]
