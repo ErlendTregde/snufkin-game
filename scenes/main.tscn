@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://d0jqutw3c62wv"]
+[gd_scene load_steps=19 format=3 uid="uid://d0jqutw3c62wv"]
 
 [ext_resource type="Texture2D" uid="uid://cfwm52xurxriy" path="res://assets/images/Mountan.png" id="1_52jxg"]
 [ext_resource type="PackedScene" uid="uid://cu4vgvuaexi2s" path="res://scenes/player.tscn" id="1_g03jv"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://scripts/HouseInteraction.gd" id="5_trceg"]
 [ext_resource type="Script" uid="uid://biitei8kw21e" path="res://scripts/FishingInteraction.gd" id="11_cufjj"]
 [ext_resource type="Texture2D" uid="uid://chvsh4u6wskln" path="res://assets/images/brigde.png" id="11_guwuy"]
+[ext_resource type="PackedScene" uid="uid://cs1n3g1rhfrap" path="res://scenes/FallingLeaves.tscn" id="14_a8y0u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a8y0u"]
 size = Vector2(28.871292, 16.789165)
@@ -58,7 +59,7 @@ motion_scale = Vector2(0.1, 0.1)
 texture_filter = 3
 texture_repeat = 1
 offset_left = -2552.0
-offset_top = 186.0
+offset_top = 233.0
 offset_right = 4548.0
 offset_bottom = 745.0
 mouse_filter = 2
@@ -187,6 +188,10 @@ offset_bottom = -81.0
 text = "\"Press E to go fishing"
 
 [node name="Player" parent="." instance=ExtResource("1_g03jv")]
+position = Vector2(688, 976)
+
+[node name="FallingLeaves" parent="." instance=ExtResource("14_a8y0u")]
+visible = false
 
 [connection signal="body_entered" from="HouseEntrance" to="HouseEntrance" method="_on_body_entered"]
 [connection signal="body_exited" from="HouseEntrance" to="HouseEntrance" method="_on_body_exited"]

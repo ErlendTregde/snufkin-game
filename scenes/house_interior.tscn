@@ -54,6 +54,7 @@ text = "Press E to Exit House"
 horizontal_alignment = 1
 
 [node name="Player" parent="." instance=ExtResource("1_house")]
+position = Vector2(576, 550)
 
 [node name="WelcomeLabel" type="Label" parent="."]
 offset_left = 376.0

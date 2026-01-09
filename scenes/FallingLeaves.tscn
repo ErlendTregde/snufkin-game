@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cs1n3g1rhfrap"]
+
+[ext_resource type="Script" path="res://scripts/falling_leaves.gd" id="1_falling_leaves"]
+[ext_resource type="Texture2D" uid="uid://bdgoy1s0e8shh" path="res://assets/images/leaves.png" id="2_y8dgk"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 98, 0)
+
+[node name="FallingLeaves" type="Node2D"]
+script = ExtResource("1_falling_leaves")
+leaf_textures = Array[Texture2D]([ExtResource("2_y8dgk")])
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+amount = 75
+lifetime = 7.0
+visibility_rect = Rect2(-960, -25, 1920, 1000)
+process_material = SubResource("ParticleProcessMaterial_1")

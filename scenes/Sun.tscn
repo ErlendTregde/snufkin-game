@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://csgw7dp0cn7a3"]
+
+[ext_resource type="Script" path="res://scripts/sun_light.gd" id="1_sun"]
+
+[node name="Sun" type="DirectionalLight2D"]
+color = Color(1, 0.95, 0.8, 1)
+energy = 0.8
+range_z_min = -4096
+range_z_max = 4096
+range_layer_min = -512
+range_layer_max = 512
+shadow_enabled = true
+shadow_color = Color(0.2, 0.2, 0.3, 0.5)
+shadow_filter_smooth = 1.0
+height = 0.1
+script = ExtResource("1_sun")
