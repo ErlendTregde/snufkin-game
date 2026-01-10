@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cauib76nahvnp"]
 
 [ext_resource type="Script" uid="uid://dt882v8kyrq1d" path="res://scripts/dialogue.gd" id="1_35dwf"]
-[ext_resource type="Texture2D" uid="uid://dxq4efhlrxub2" path="res://dialague/Images/idleSmokeing.png" id="2_f48r5"]
+[ext_resource type="Texture2D" uid="uid://dxq4efhlrxub2" path="res://assets/images/idleSmokeing.png" id="2_f48r5"]
 [ext_resource type="Texture2D" uid="uid://cesbk3awexpmh" path="res://dialague/Images/UiTop.png" id="3_s5fl3"]
 [ext_resource type="Texture2D" uid="uid://csbc7p1rrjpbg" path="res://dialague/Images/UiButtun.png" id="4_r6pyg"]
 [ext_resource type="Texture2D" uid="uid://bkbgp8edqonmc" path="res://dialague/Images/whitebox.png" id="5_u5p5b"]
