@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://d0jqutw3c62wv"]
+[gd_scene load_steps=33 format=3 uid="uid://d0jqutw3c62wv"]
 
 [ext_resource type="Texture2D" uid="uid://cfwm52xurxriy" path="res://assets/images/Mountan.png" id="1_52jxg"]
 [ext_resource type="PackedScene" uid="uid://cu4vgvuaexi2s" path="res://scenes/player.tscn" id="1_g03jv"]
@@ -12,7 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://b8idpc6364s4t" path="res://assets/images/flowers1.png" id="5_rnkrj"]
 [ext_resource type="Script" path="res://scripts/HouseInteraction.gd" id="5_trceg"]
 [ext_resource type="Script" uid="uid://biitei8kw21e" path="res://scripts/FishingInteraction.gd" id="11_cufjj"]
-[ext_resource type="Texture2D" uid="uid://chvsh4u6wskln" path="res://assets/images/brigde.png" id="11_guwuy"]
+[ext_resource type="Texture2D" uid="uid://b31hhmaobsx4v" path="res://assets/images/brideandwateranimation1.png" id="11_gqmmt"]
+[ext_resource type="Texture2D" uid="uid://cgq3qe1kpfdvt" path="res://assets/images/brideandwateranimation2.png" id="13_yc10j"]
 [ext_resource type="PackedScene" uid="uid://cs1n3g1rhfrap" path="res://scenes/FallingLeaves.tscn" id="14_a8y0u"]
 [ext_resource type="PackedScene" uid="uid://blmvkqgkshack" path="res://scenes/WindGust.tscn" id="15_jkv2x"]
 [ext_resource type="Script" uid="uid://bk7m3v5n8w4r2" path="res://scripts/WindGustSpawner.gd" id="16_jbj1t"]
@@ -31,6 +32,43 @@ size = Vector2(6, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ftqk5"]
 size = Vector2(385.5, 276)
+
+[sub_resource type="Animation" id="Animation_pm3ni"]
+resource_name = "water"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("11_gqmmt"), ExtResource("13_yc10j"), ExtResource("11_gqmmt")]
+}
+
+[sub_resource type="Animation" id="Animation_y6deb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("11_gqmmt")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_og1vs"]
+_data = {
+&"RESET": SubResource("Animation_y6deb"),
+&"water": SubResource("Animation_pm3ni")
+}
 
 [sub_resource type="Animation" id="Animation_jscy8"]
 length = 0.001
@@ -68,6 +106,9 @@ _data = {
 &"RESET": SubResource("Animation_jscy8"),
 &"fire": SubResource("Animation_yc10j")
 }
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yc10j"]
+size = Vector2(72, 502.5)
 
 [node name="Main" type="Node2D"]
 z_index = 9
@@ -202,9 +243,9 @@ position = Vector2(1, -40)
 position = Vector2(-23, -36)
 
 [node name="Brigde" type="Sprite2D" parent="."]
-z_index = 1
-position = Vector2(-1503, 1123)
-texture = ExtResource("11_guwuy")
+z_index = 5
+position = Vector2(-1470, 1114)
+texture = ExtResource("11_gqmmt")
 
 [node name="Area2D" type="Area2D" parent="Brigde"]
 z_index = 1
@@ -216,7 +257,7 @@ script = ExtResource("11_cufjj")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Brigde/Area2D/StaticBody2D"]
 position = Vector2(-6, 21.5)
 scale = Vector2(18.1, 5.65)
-polygon = PackedVector2Array(10.4972, 4.51328, 6.57458, -0.97345, 2.98342, -4.1593, -0.165749, -4.33629, -3.70166, -3.80531, -6.40884, -1.85841, -10.3315, 2.74336)
+polygon = PackedVector2Array(10.4972, 4.51328, 6.57458, -0.97345, 2.98342, -4.1593, -0.165749, -4.33629, -3.70166, -3.80531, -6.40884, -1.85841, -11.381218, 5.929199)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Brigde/Area2D"]
 position = Vector2(-9.25, -50)
@@ -229,6 +270,12 @@ offset_top = -136.0
 offset_right = 161.0
 offset_bottom = -81.0
 text = "\"Press E to go fishing"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Brigde"]
+libraries = {
+&"": SubResource("AnimationLibrary_og1vs")
+}
+autoplay = "water"
 
 [node name="Player" parent="." instance=ExtResource("1_g03jv")]
 z_index = 6
@@ -280,6 +327,13 @@ libraries = {
 &"": SubResource("AnimationLibrary_pm3ni")
 }
 autoplay = "fire"
+
+[node name="Node2D" type="StaticBody2D" parent="."]
+position = Vector2(-2072, 1154)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D"]
+position = Vector2(0, -53.75)
+shape = SubResource("RectangleShape2D_yc10j")
 
 [connection signal="body_entered" from="HouseEntrance" to="HouseEntrance" method="_on_body_entered"]
 [connection signal="body_exited" from="HouseEntrance" to="HouseEntrance" method="_on_body_exited"]

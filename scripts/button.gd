@@ -3,7 +3,7 @@ extends Button
 var dragging = false
 var of = Vector2(0, 0)  # Offset to track mouse position relative to object
 
-func _process(delta):
+func _process(_delta):
 	if dragging:
 		position = get_global_mouse_position() - of
 

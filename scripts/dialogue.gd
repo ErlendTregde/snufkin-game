@@ -7,7 +7,8 @@ var current_dialogue_id = -1
 var active_npc = null
 var npc_sprite_path = {}
 var player_camera = null
-var player_camera_original_position = Vector2.ZERO  # Store original position
+var player_node = null  # Cache player reference
+var player_camera_original_position = Vector2.ZERO
 
 @onready var left_character = $LeftCharacter
 @onready var right_character = $RightCharacter
@@ -18,32 +19,30 @@ var player_camera_original_position = Vector2.ZERO  # Store original position
 
 func _ready():
 	player_camera = get_tree().get_first_node_in_group("player_camera")
+	player_node = get_tree().get_first_node_in_group("player")
+	
 	if player_camera:
-		player_camera.make_current()  # Ensure the player's camera is active at start
-	# Preload NPC sprites for easy swapping
+		player_camera.make_current()
+	
 	npc_sprite_path = {
 		"Moomin mama": preload("res://dialague/Images/idleSmokeing.png"),
-		#"Other NPC": preload("res://sprites/other_npc.png") # Example for future NPCs
 	}
-	right_character.texture = preload("res://dialague/Images/idleSmokeing.png") # Snufkin always on the right
-	visible = false  # Hide the UI at start
+	right_character.texture = preload("res://dialague/Images/idleSmokeing.png")
+	visible = false
+	
 	if not back_button.pressed.is_connected(_on_button_pressed):
 		back_button.pressed.connect(_on_button_pressed)
 		
-	back_button.visible = true  # Show the button when dialogue is open
+	back_button.visible = true
 
 func load_dialogue():
 	var file = FileAccess.open(dialogue_file, FileAccess.READ)
 	if not file:
-		print("Error: Could not open dialogue file: ", dialogue_file)
 		return
 	var content = file.get_as_text()
 	if content.is_empty():
-		print("Error: Dialogue file is empty!")
 		return
 	dialogue = JSON.parse_string(content)
-	if dialogue == null:
-		print("Error: Failed to parse JSON!")
 
 func start_dialogue(npc):
 	if active_npc:
@@ -53,7 +52,6 @@ func start_dialogue(npc):
 	load_dialogue()
 	
 	if dialogue == null or dialogue.size() == 0:
-		print("No dialogue data loaded!")
 		return
 		
 	current_dialogue_id = -1
@@ -69,7 +67,6 @@ func start_dialogue(npc):
 	right_character.visible = true
 	
 	# Camera transition
-	player_camera = get_tree().get_first_node_in_group("player_camera")
 	if player_camera and player_camera is Camera2D:
 		player_camera_original_position = player_camera.position
 		
@@ -83,15 +80,13 @@ func start_dialogue(npc):
 		dialogue_camera.make_current()
 
 	# Disable player movement
-	var player = get_tree().get_first_node_in_group("player")
-	if player:
-		player.set_physics_process(false)  # Disable physics (movement)
-		player.set_process_input(false)  # Disable input handling
+	if player_node:
+		player_node.set_physics_process(false)
+		player_node.set_process_input(false)
 
-		# If using velocity for movement, set velocity to zero
-		if "velocity" in player:
-			player.velocity = Vector2.ZERO
-			player.move_and_slide()  # Apply immediately to stop movement
+		if "velocity" in player_node:
+			player_node.velocity = Vector2.ZERO
+			player_node.move_and_slide()
 
 	z_index = 100
 	next_script()
@@ -136,6 +131,8 @@ func end_dialogue():
 	player_camera = get_tree().get_first_node_in_group("player_camera")
 	if player_camera and player_camera is Camera2D:
 		player_camera.make_current()
+	if player_camera and player_camera is Camera2D:
+		player_camera.make_current()
 		
 		# Smooth camera transition back
 		var tween = get_tree().create_tween()
@@ -145,15 +142,11 @@ func end_dialogue():
 		await tween.finished
 
 	# Re-enable player movement
-	var player = get_tree().get_first_node_in_group("player")
-	if player:
-		player.set_physics_process(true)  # Re-enable physics (movement)
-		player.set_process_input(true)  # Re-enable input handling
+	if player_node:
+		player_node.set_physics_process(true)
+		player_node.set_process_input(true)
 
-	get_tree().paused = false  # Unpause the game
-
-
-
+	get_tree().paused = false
 
 
 

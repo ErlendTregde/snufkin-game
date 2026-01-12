@@ -67,59 +67,59 @@ func setup_particles():
 	particles.visibility_rect = Rect2(-3000, -emission_height/2, 3500, emission_height * 2)
 	
 	# Create and configure ParticleProcessMaterial
-	var material = ParticleProcessMaterial.new()
+	var process_material = ParticleProcessMaterial.new()
 	
 	# Emission shape - vertical line on right side
-	material.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_BOX
-	material.emission_box_extents = Vector3(20, emission_height / 2, 0)
+	process_material.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_BOX
+	process_material.emission_box_extents = Vector3(20, emission_height / 2, 0)
 	
 	# Particle direction - FAST LEFT movement
-	material.direction = Vector3(-1, 0.1, 0)  # Almost pure left, minimal down
-	material.spread = 8.0
-	material.initial_velocity_min = 400.0  # Very fast
-	material.initial_velocity_max = 600.0  # Extremely fast
+	process_material.direction = Vector3(-1, 0.1, 0)  # Almost pure left, minimal down
+	process_material.spread = 8.0
+	process_material.initial_velocity_min = 400.0  # Very fast
+	process_material.initial_velocity_max = 600.0  # Extremely fast
 	
 	# Gravity for gentle falling as they blow left
-	material.gravity = Vector3(wind_strength, gravity_strength, 0)
+	process_material.gravity = Vector3(wind_strength, gravity_strength, 0)
 	
 	# Minimal damping for fast movement
-	material.damping_min = 2.0
-	material.damping_max = 5.0
+	process_material.damping_min = 2.0
+	process_material.damping_max = 5.0
 	
 	# Light turbulence for subtle wind variation
-	material.turbulence_enabled = true
-	material.turbulence_noise_strength = turbulence_strength
-	material.turbulence_noise_scale = 8.0  # Large scale for gentle variation
-	material.turbulence_noise_speed = Vector3(-2.0, 0.2, 0)  # Fast left flow
-	material.turbulence_influence_min = 0.1  # Minimal influence
-	material.turbulence_influence_max = 0.25
+	process_material.turbulence_enabled = true
+	process_material.turbulence_noise_strength = turbulence_strength
+	process_material.turbulence_noise_scale = 8.0  # Large scale for gentle variation
+	process_material.turbulence_noise_speed = Vector3(-2.0, 0.2, 0)  # Fast left flow
+	process_material.turbulence_influence_min = 0.1  # Minimal influence
+	process_material.turbulence_influence_max = 0.25
 	
 	# Reduced tangential acceleration
-	material.tangential_accel_min = -5.0
-	material.tangential_accel_max = 5.0
+	process_material.tangential_accel_min = -5.0
+	process_material.tangential_accel_max = 5.0
 	
 	# Scale variation
-	material.scale_min = min_leaf_scale
-	material.scale_max = max_leaf_scale
+	process_material.scale_min = min_leaf_scale
+	process_material.scale_max = max_leaf_scale
 	
 	# Smooth rotation (spinning as they flow)
-	material.angular_velocity_min = rotation_speed_min * 0.5  # Slower, smoother spin
-	material.angular_velocity_max = rotation_speed_max * 0.5
+	process_material.angular_velocity_min = rotation_speed_min * 0.5  # Slower, smoother spin
+	process_material.angular_velocity_max = rotation_speed_max * 0.5
 	
 	# Inherit velocity for smooth transitions
-	material.inherit_velocity_ratio = 0.3
+	process_material.inherit_velocity_ratio = 0.3
 	
 	# Color modulation (optional - keeps original colors)
-	material.color = Color(1, 1, 1, 1)
+	process_material.color = Color(1, 1, 1, 1)
 	
 	# Collision with ground (rigid body mode)
 	if enable_ground_collision:
-		material.collision_mode = ParticleProcessMaterial.COLLISION_RIGID
-		material.collision_friction = 0.8
-		material.collision_bounce = 0.2
+		process_material.collision_mode = ParticleProcessMaterial.COLLISION_RIGID
+		process_material.collision_friction = 0.8
+		process_material.collision_bounce = 0.2
 	
 	# Apply material
-	particles.process_material = material
+	particles.process_material = process_material
 	particles.emitting = true
 
 # Update parameters in real-time when changed in inspector
@@ -143,9 +143,6 @@ func find_ground():
 			ground_y = ground_node.global_position.y
 		else:
 			ground_y = ground_node.global_position.y
-		print("FallingLeaves: Found ground at Y: ", ground_y)
-	else:
-		print("FallingLeaves: Ground node '", ground_node_name, "' not found. Using default Y: ", ground_y)
 
 func find_node_by_name(node: Node, search_name: String) -> Node:
 	if node.name == search_name:

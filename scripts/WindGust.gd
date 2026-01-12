@@ -4,6 +4,7 @@ extends Line2D
 var pf_dict = []
 var trail_gradient: Gradient
 var use_gradient = false
+var needs_redraw: bool = true  # Optimization flag
 
 @export var reverse_direction = false
 @export var line_segments = 20
@@ -29,13 +30,15 @@ func _ready():
 		use_gradient = true
 
 func _process(delta):
-	
 	move_path()
 	
 	if use_gradient:
 		update_path_gradient()
-		
-	draw_path()
+	
+	# Only redraw when path actually changed
+	if needs_redraw:
+		draw_path()
+		needs_redraw = false
 	
 
 func flip_path():
@@ -67,6 +70,8 @@ func move_path():
 		
 		if pf.trail_offset >= 1.0:
 			pf.progress_ratio = 1.0
+	
+	needs_redraw = true  # Mark that we need to redraw
 
 	if pf_dict[0].progress_ratio == 1.0:
 		queue_free()

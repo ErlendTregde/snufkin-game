@@ -8,6 +8,7 @@ extends Node2D
 @export var max_spawn_height: float = 100.0  # Maximum Y position for spawning
 
 var spawn_timer: Timer  # Timer reference
+var active_fish_count: int = 0  # Cache fish count for performance
 
 func _ready():
 	spawn_timer = Timer.new()
@@ -22,16 +23,17 @@ func _ready():
 
 func spawn_fish():
 	if not fish_scene:
-		print("❌ Error: No fish scene assigned!")
 		return
 	
 	# Don't spawn if we already have max fish
-	if get_fish_count() >= max_fish:
+	if active_fish_count >= max_fish:
 		return
 	
 	var fish = fish_scene.instantiate()
 	add_child(fish)
-	fish.add_to_group("fishes")  # Add fish to group
+	fish.add_to_group("fishes")
+	fish.tree_exited.connect(_on_fish_despawned)
+	active_fish_count += 1
 
 	# Set random spawn height
 	var spawn_y = randf_range(min_spawn_height, max_spawn_height)
@@ -46,21 +48,13 @@ func spawn_fish():
 	
 	var path_follow = fish.get_node_or_null("Path2D/PathFollow2D")
 	if path_follow:
-		# Start at beginning of path
 		path_follow.progress_ratio = 0.0
-		print("✅ Fish Spawned at height:", spawn_y, "Direction:", "Right" if move_right else "Left", "Size:", size_scale, "🐟 Total Fish:", get_fish_count())
-	else:
-		print("⚠ PathFollow2D not found in spawned fish! Children:")
-		for child in fish.get_children():
-			print("  - ", child.name)
 	
 	# Set next spawn timer to random interval
 	spawn_timer.wait_time = randf_range(spawn_interval_min, spawn_interval_max)
 
+func _on_fish_despawned():
+	active_fish_count -= 1
+
 func get_fish_count():
-	# Count only valid fish nodes in the scene
-	var fish_count = 0
-	for fish in get_tree().get_nodes_in_group("fishes"):
-		if is_instance_valid(fish):
-			fish_count += 1
-	return fish_count
+	return active_fish_count

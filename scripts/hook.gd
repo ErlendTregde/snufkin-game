@@ -66,14 +66,12 @@ func cast_hook():
 
 func return_to_rod():
 	if fish_caught and is_instance_valid(fish_caught):
-		print("🐟 Fish reeling in...")  
 		reeling = true  # Start fight
 	else:
 		smooth_move(original_position)  # Fast return if no fish  
 
 func finish_reeling():
-	# ✅ When hook reaches original position, the fish is delivered
-	print("🎉 Fish fully reeled in!")
+	# When hook reaches original position, the fish is delivered
 	if fish_caught and is_instance_valid(fish_caught):
 		fish_caught.queue_free()
 		fish_caught = null
@@ -82,8 +80,6 @@ func finish_reeling():
 		var fish_spawner = get_node_or_null("/root/FishingScene/FishingZone/FishSpawner")
 		if fish_spawner:
 			fish_spawner.spawn_fish()
-		else:
-			print("⚠️ FishSpawner not found!")
 
 	reeling = false  # Stop fight
 	is_cast = false  # Allow recasting
@@ -113,12 +109,10 @@ func _on_area_2d_area_entered(other_area):
 	if other_area.is_in_group("fish") and fish_caught == null:
 		# Get the root Fish node (Area2D -> PathFollow2D -> Path2D -> Fish)
 		fish_caught = other_area.get_parent().get_parent().get_parent()
-		print("✅ Fish caught:", fish_caught.name)
 		
 		# Stop the fish from swimming
 		if fish_caught.has_method("set"):
 			fish_caught.is_caught = true
 		
 		reeling = true
-		fish_start_y = position.y  # ✅ Store hook's Y position at catch time (local coordinates)
-		print("🎯 Hook position at catch:", fish_start_y)
+		fish_start_y = position.y

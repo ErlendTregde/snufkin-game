@@ -1,6 +1,7 @@
 extends Area2D
 
 var entered = false  
+var player_character_body = null  # Cache CharacterBody2D reference
 @onready var label = $Label  
 
 func _ready():
@@ -9,22 +10,19 @@ func _ready():
 func _on_body_entered(body):
 	if body.is_in_group("Player"):  
 		entered = true
+		# Body entering is the CharacterBody2D directly
+		player_character_body = body
 		label.visible = true  
 
 func _on_body_exited(body):
 	if body.is_in_group("Player"):
 		entered = false
+		player_character_body = null
 		label.visible = false  
 
 func _process(_delta):
 	if entered and Input.is_action_just_pressed("interact"):
-		# Find CharacterBody2D inside Player
-		var player = get_tree().get_nodes_in_group("Player")  
-		if player.size() > 0:
-			var character_body = player[0].get_node("CharacterBody2D")  # Get CharacterBody2D
-			Global.save_position(character_body.global_position)  # Save the correct position
-			print("✅ Player Position Saved Before Fishing:", character_body.global_position)  # Debugging
-		else:
-			print("❌ Error: Player not found in scene!")
+		if player_character_body:
+			Global.save_position(player_character_body.global_position)
 		
 		get_tree().change_scene_to_file("res://scenes/fishing_scene.tscn")

@@ -25,15 +25,11 @@ func _ready():
 	# Check if we're in the house interior scene - if so, don't load saved position
 	var current_scene = get_tree().current_scene.name
 	if current_scene == "HouseInterior":
-		print("🏠 Inside house - keeping default spawn position")
+		pass  # Keep default spawn position
 	else:
 		var saved_pos = Global.get_saved_position()
-		
 		if saved_pos != Vector2.ZERO:  
-			global_position = saved_pos  # ✅ Use global_position instead of position
-			print("✅ Player Spawned at:", global_position)
-		else:
-			print("⚠ No saved position, spawning at default.")
+			global_position = saved_pos
 	
 	idle_timer.wait_time = IDLE_TIME_LIMIT
 	idle_timer.one_shot = true  # Ensure it only triggers once

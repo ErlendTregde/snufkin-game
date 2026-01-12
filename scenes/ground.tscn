@@ -15,7 +15,7 @@ shape = SubResource("RectangleShape2D_kwelb")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 z_index = 5
-offset_left = -1135.0
+offset_left = -4750.0
 offset_top = 505.0
 offset_right = 4260.0
 offset_bottom = 1529.0

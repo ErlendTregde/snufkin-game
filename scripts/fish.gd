@@ -8,9 +8,11 @@ extends Node2D
 var is_caught: bool = false  # Flag to stop movement when caught
 var move_right: bool = true  # Direction fish is moving
 
+# Cache the reversed curve to avoid recreating it
+var reversed_curve: Curve2D = null
+
 func _ready():
 	add_to_group("fish")  
-	print("🐟 Fish initialized:", name)
 	
 	# Try to find Path2D and PathFollow2D
 	path_2d = get_node_or_null("Path2D")
@@ -20,23 +22,18 @@ func _ready():
 		path_follow.rotates = false
 		area = path_follow.get_node_or_null("Area2D")
 		sprite = path_follow.get_node_or_null("Sprite2D")
-		print("✅ PathFollow2D found, starting progress:", path_follow.progress_ratio)
-	else:
-		print("⚠️ PathFollow2D not found! Scene structure:")
-		for child in get_children():
-			print("  - ", child.name)
 
 func set_direction(right: bool, size_scale: float = 0.5):
 	move_right = right
 	
 	# Reverse the path for right-to-left movement FIRST
-	if path_2d and path_2d.curve:
-		if not move_right:
-			# Create reversed path for right-to-left (starting from right side)
-			var new_curve = Curve2D.new()
-			new_curve.add_point(Vector2(400, 0))
-			new_curve.add_point(Vector2(-200, 0))
-			path_2d.curve = new_curve
+	if path_2d and path_2d.curve and not move_right:
+		# Only create reversed curve once
+		if not reversed_curve:
+			reversed_curve = Curve2D.new()
+			reversed_curve.add_point(Vector2(400, 0))
+			reversed_curve.add_point(Vector2(-200, 0))
+		path_2d.curve = reversed_curve
 	
 	# Apply size and orientation to sprite AFTER path is set
 	if sprite and path_follow:
@@ -64,5 +61,4 @@ func _process(delta):
 		
 		# Remove fish when it reaches the end
 		if path_follow.progress_ratio >= 1.0:
-			print("🐟 Fish swam away and despawning")
 			queue_free()

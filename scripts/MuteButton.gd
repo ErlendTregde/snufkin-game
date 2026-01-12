@@ -4,7 +4,7 @@ var is_muted: bool = false
 @onready var volume_slider = $VolumeSlider
 
 func _ready():
-	text = "🔊"
+	text = "Sound: ON"
 	
 	# Setup slider
 	if volume_slider:
@@ -36,9 +36,9 @@ func update_audio_state():
 	
 	# Update button text
 	if is_muted:
-		text = "🔇"
+		text = "Sound: OFF"
 	else:
-		text = "🔊"
+		text = "Sound: ON"
 
 func _on_mouse_entered():
 	if volume_slider:
@@ -69,8 +69,8 @@ func _on_volume_changed(value: float):
 	# Update mute state based on volume
 	if value == 0:
 		is_muted = true
-		text = "🔇"
+		text = "Sound: OFF"
 	else:
 		is_muted = false
-		text = "🔊"
+		text = "Sound: ON"
 
