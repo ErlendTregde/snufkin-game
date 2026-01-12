@@ -10,8 +10,8 @@ func reset_reel_indicator():
 
 
 func _ready():
-	reel_indicator.visible = false  # 🚫 Hide it until we catch a fish
-	reel_indicator.play("idle")  # Start with idle animation
+	# Hide the entire UI - no longer used
+	visible = false
 
 func show_ui():
 	visible = true
@@ -33,12 +33,13 @@ func update_reel_progress(current_y, hook_start_y, fish_start_y):
 
 	# Correctly calculate total reeling distance
 	var total_distance = abs(fish_start_y - hook_start_y)  # Total reeling distance
-	var reeling_progress = abs(fish_start_y - current_y)  # How much has been reeled in
+	var reeled_in = abs(current_y - fish_start_y)  # How much has been reeled in from fish start position
 
 	# Prevent division errors
 	var progress = 0.0
 	if total_distance > 1:  # Only update if the distance is significant
-		progress = clamp(1.0 - (reeling_progress / total_distance), 0.0, 1.0)
+		# Progress goes from 0.0 (at start) to 1.0 (when fish reaches hook start position)
+		progress = clamp(reeled_in / total_distance, 0.0, 1.0)
 
 	# Update reel bar
 	reel_bar.value = progress * reel_bar.max_value
@@ -48,7 +49,7 @@ func update_reel_progress(current_y, hook_start_y, fish_start_y):
 	print("DEBUG: Hook Start Y:", hook_start_y)
 	print("DEBUG: Current Y:", current_y)
 	print("DEBUG: Total Distance:", total_distance)
-	print("DEBUG: Reeling Progress:", reeling_progress)
+	print("DEBUG: Reeled In:", reeled_in)
 	print("DEBUG: Progress (0-1):", progress)
 	print("DEBUG: Reel Bar Value:", reel_bar.value)
 

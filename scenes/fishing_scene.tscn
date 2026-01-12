@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bgomool2qdvok"]
+[gd_scene load_steps=13 format=3 uid="uid://bgomool2qdvok"]
 
 [ext_resource type="Texture2D" uid="uid://chvsh4u6wskln" path="res://assets/images/brigde.png" id="1_rwkfx"]
 [ext_resource type="Script" uid="uid://dr1lbga8hn1pl" path="res://scripts/GoHomebutton.gd" id="2_f4jrf"]
@@ -6,12 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://7fptxgkftifk" path="res://assets/images/fishing.png" id="4_rle4s"]
 [ext_resource type="Script" uid="uid://ds0w5suhap43w" path="res://scripts/hook.gd" id="5_se1cd"]
 [ext_resource type="Texture2D" uid="uid://duxchnu26p35" path="res://assets/images/hook.png" id="6_b6wg5"]
-[ext_resource type="Texture2D" uid="uid://ser0fve3tefq" path="res://assets/images/fish.png" id="7_duh6x"]
 [ext_resource type="Script" uid="uid://3h6p3dgx7ot3" path="res://scripts/FishingZone.gd" id="7_n8jnv"]
-[ext_resource type="Script" uid="uid://dh6fmiruu4tgf" path="res://scripts/fish.gd" id="7_ol4hs"]
-[ext_resource type="Script" uid="uid://bsohthx0106m8" path="res://scripts/fishing_ui.gd" id="9_0o5v3"]
-[ext_resource type="Texture2D" uid="uid://b3qv2s1kcojwn" path="res://assets/images/bar.png" id="10_8rr0j"]
-[ext_resource type="Texture2D" uid="uid://kf1k7fq82ftf" path="res://assets/images/enter.png" id="11_0bggl"]
+[ext_resource type="PackedScene" uid="uid://dsiap3bhgpfl1" path="res://scenes/fish.tscn" id="8_fish"]
+[ext_resource type="Script" uid="uid://cx3h7ac0uvcq7" path="res://scripts/fish_spawner.gd" id="9_spawner"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qw8kf"]
 animations = [{
@@ -27,30 +24,8 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_k3orv"]
 radius = 144.222
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1re8p"]
-size = Vector2(201, 102)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_57s3h"]
 size = Vector2(446, 579)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_qkkeu"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("11_0bggl")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("7_duh6x")
-}],
-"loop": true,
-"name": &"reeling",
-"speed": 5.0
-}]
 
 [node name="FishingScene" type="Node2D"]
 position = Vector2(0, 1)
@@ -83,7 +58,7 @@ anchors_preset = -1
 anchor_top = 0.025
 anchor_right = 1.2
 anchor_bottom = 1.025
-text = "Hello"
+text = "Leave"
 script = ExtResource("2_f4jrf")
 metadata/_edit_use_anchors_ = true
 
@@ -116,19 +91,11 @@ shape = SubResource("CircleShape2D_k3orv")
 position = Vector2(657, 843)
 script = ExtResource("7_n8jnv")
 
-[node name="Fish" type="Node2D" parent="FishingZone"]
+[node name="FishSpawner" type="Node2D" parent="FishingZone"]
 position = Vector2(-552, -173)
-script = ExtResource("7_ol4hs")
-
-[node name="Sprite2D" type="Sprite2D" parent="FishingZone/Fish"]
-scale = Vector2(0.574219, 0.574219)
-texture = ExtResource("7_duh6x")
-
-[node name="Area2D" type="Area2D" parent="FishingZone/Fish" groups=["fish"]]
-position = Vector2(-1, 0)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FishingZone/Fish/Area2D"]
-shape = SubResource("RectangleShape2D_1re8p")
+script = ExtResource("9_spawner")
+fish_scene = ExtResource("8_fish")
+max_fish = 5
 
 [node name="Area2D" type="Area2D" parent="FishingZone"]
 position = Vector2(-112, -337)
@@ -136,29 +103,5 @@ position = Vector2(-112, -337)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FishingZone/Area2D"]
 position = Vector2(12, 195.5)
 shape = SubResource("RectangleShape2D_57s3h")
-
-[node name="FishingUI" type="CanvasLayer" parent="."]
-
-[node name="FishingUIControl" type="Control" parent="FishingUI"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("9_0o5v3")
-
-[node name="ReelStrengthBar" type="TextureProgressBar" parent="FishingUI/FishingUIControl"]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 5.214
-anchor_bottom = 25.6
-offset_right = -168.56
-offset_bottom = -984.0
-texture_progress = ExtResource("10_8rr0j")
-
-[node name="ReelIndicator" type="AnimatedSprite2D" parent="FishingUI/FishingUIControl"]
-z_index = 2
-position = Vector2(1123, 407)
-sprite_frames = SubResource("SpriteFrames_qkkeu")
-animation = &"idle"
 
 [connection signal="area_entered" from="FishingPlayer/Hook/Area2D" to="FishingPlayer/Hook" method="_on_area_2d_area_entered"]

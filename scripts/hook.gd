@@ -14,9 +14,7 @@ var fish_resistance = 40  # Fish fights back downwards
 var pull_strength = 100  # How strong the player can pull the fish upwards
 
 @onready var sprite = $Sprite2D  
-@onready var area = $Area2D  
-@onready var fishing_ui = get_node("/root/FishingScene/FishingUI/FishingUIControl")
-@onready var reel_indicator = fishing_ui.get_node("ReelIndicator")  # ✅ Correct path
+@onready var area = $Area2D
 
 
 
@@ -27,27 +25,19 @@ func _process(delta):
 	if reeling:
 		# ✅ Fish always follows hook position
 		update_fish_position()
-		
-		# ✅ Update UI reel progress
-		fishing_ui.update_reel_progress(
-			position.y,        # Hook’s current Y position
-			original_position.y,  # Hook’s starting Y position
-			fish_start_y       # Fish’s starting Y position
-		)
 
-		# ✅ Reeling controls (button changes animation)
+		# ✅ Reeling controls
 		if Input.is_action_pressed("catch_fish"):
 			position.y -= pull_strength * delta  # Reel the fish upwards
-			fishing_ui.on_reel_pressed()  # 🔥 Change sprite to reeling mode
 		else:
 			position.y += fish_resistance * delta  # Fish fights back
-			fishing_ui.reset_reel_indicator()
 
 		# ✅ Move hook AND fish towards original position
 		position.x = move_toward(position.x, original_position.x, speed * delta)
 
 		# ✅ If the hook reaches the fishing pole, the fight ends
-		if position.y <= original_position.y:
+		# Allow a small margin so the bar can reach 100%
+		if position.y <= original_position.y + 5:
 			finish_reeling()
 		return  # ✅ Disable normal movement when reeling
 
@@ -77,9 +67,7 @@ func cast_hook():
 func return_to_rod():
 	if fish_caught and is_instance_valid(fish_caught):
 		print("🐟 Fish reeling in...")  
-		reeling = true  # Start fight  
-		fishing_ui.show_ui()  # 🔥 Show fishing UI & play "idle" immediately  
-		fishing_ui.reset_reel_indicator()  # ✅ Ensure idle animation starts at the beginning  
+		reeling = true  # Start fight
 	else:
 		smooth_move(original_position)  # Fast return if no fish  
 
@@ -89,16 +77,28 @@ func finish_reeling():
 	if fish_caught and is_instance_valid(fish_caught):
 		fish_caught.queue_free()
 		fish_caught = null
+		
+		# Trigger new fish spawn
+		var fish_spawner = get_node_or_null("/root/FishingScene/FishingZone/FishSpawner")
+		if fish_spawner:
+			fish_spawner.spawn_fish()
+		else:
+			print("⚠️ FishSpawner not found!")
 
 	reeling = false  # Stop fight
 	is_cast = false  # Allow recasting
 	smooth_move(original_position)
-	fishing_ui.hide_ui()  # 🔥 Hide UI after reeling ends
 
 func update_fish_position():
 	if fish_caught and is_instance_valid(fish_caught):
-		# ✅ Fish exactly follows hook position
-		fish_caught.global_position = global_position
+		# Position fish centered on hook, slightly above it
+		# The fish's root Node2D position needs to align with the hook
+		var fish_path_follow = fish_caught.get_node_or_null("Path2D/PathFollow2D")
+		if fish_path_follow:
+			# Offset to center the fish sprite on the hook
+			fish_caught.global_position = global_position - fish_path_follow.position + Vector2(0, -30)
+		else:
+			fish_caught.global_position = global_position + Vector2(0, -30)
 
 func smooth_move(target_position: Vector2):
 	if not is_inside_tree():
@@ -108,16 +108,17 @@ func smooth_move(target_position: Vector2):
 	tween.tween_property(self, "position", target_position, 0.5)
 
 
-func reset_reel_indicator():
-	if reel_indicator:
-		reel_indicator.play("idle")  # 🎣 Switch back to idle animation when not pressing
-
-
 # Detect fish collision
 func _on_area_2d_area_entered(other_area):
 	if other_area.is_in_group("fish") and fish_caught == null:
-		fish_caught = other_area.get_parent()
+		# Get the root Fish node (Area2D -> PathFollow2D -> Path2D -> Fish)
+		fish_caught = other_area.get_parent().get_parent().get_parent()
 		print("✅ Fish caught:", fish_caught.name)
+		
+		# Stop the fish from swimming
+		if fish_caught.has_method("set"):
+			fish_caught.is_caught = true
+		
 		reeling = true
-		fish_start_y = fish_caught.global_position.y  # ✅ Store correct fish start position
-		fishing_ui.show_ui()  # Show UI immediately
+		fish_start_y = position.y  # ✅ Store hook's Y position at catch time (local coordinates)
+		print("🎯 Hook position at catch:", fish_start_y)

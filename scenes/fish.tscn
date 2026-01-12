@@ -3,43 +3,31 @@
 [ext_resource type="Script" uid="uid://dh6fmiruu4tgf" path="res://scripts/fish.gd" id="1_sx5di"]
 [ext_resource type="Texture2D" uid="uid://ser0fve3tefq" path="res://assets/images/fish.png" id="2_xxc0e"]
 
-[sub_resource type="Curve2D" id="Curve2D_rvinf"]
+[sub_resource type="Curve2D" id="Curve2D_8g0i4"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 490.451, -423.212, 0, 0, 0, 0, 501.764, -98.2219)
+"points": PackedVector2Array(0, 0, 0, 0, -200, 0, 0, 0, 0, 0, 400, 0)
 }
 point_count = 2
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ojnp0"]
-size = Vector2(138.786, 117.789)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8g0i4"]
+size = Vector2(120, 80)
 
 [node name="Fish" type="Node2D"]
+script = ExtResource("1_sx5di")
 
 [node name="Path2D" type="Path2D" parent="."]
-position = Vector2(339, 371)
-scale = Vector2(1.5027, 1.83259)
-curve = SubResource("Curve2D_rvinf")
+curve = SubResource("Curve2D_8g0i4")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
-position = Vector2(490.451, -423.212)
-rotation = 1.536
+position = Vector2(-200, 0)
 loop = false
-script = ExtResource("1_sx5di")
 
 [node name="Sprite2D" type="Sprite2D" parent="Path2D/PathFollow2D"]
 z_index = 5
-position = Vector2(142.839, 344.567)
-rotation = -1.5708
-scale = Vector2(0.494824, 0.451181)
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_xxc0e")
 
-[node name="Area2D" type="Area2D" parent="Path2D/PathFollow2D"]
-position = Vector2(146.435, 335.37)
-rotation = -2.35619
-scale = Vector2(1.03241, 1.00524)
+[node name="Area2D" type="Area2D" parent="Path2D/PathFollow2D" groups=["fish"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/Area2D"]
-position = Vector2(-14.3927, 18.0554)
-scale = Vector2(1, 0.999999)
-shape = SubResource("RectangleShape2D_ojnp0")
-
-[connection signal="area_entered" from="Path2D/PathFollow2D/Area2D" to="Path2D/PathFollow2D" method="_on_area_2d_area_entered"]
+shape = SubResource("RectangleShape2D_8g0i4")

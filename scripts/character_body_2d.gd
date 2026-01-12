@@ -48,7 +48,13 @@ func _physics_process(delta: float) -> void:
 		velocity.y = JUMP_FORCE
 		reset_idle_timer()  # Reset idle timer on jump
 
-	# Prevent overriding sitting animation
+	# Cancel sitting animation if moving left or right
+	if is_idle and direction != 0:
+		is_idle = false
+		stop_music()
+		reset_idle_timer()
+	
+	# Prevent overriding sitting animation if idle and not moving
 	if is_idle:
 		return  
 

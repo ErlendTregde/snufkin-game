@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://d0jqutw3c62wv"]
+[gd_scene load_steps=28 format=3 uid="uid://d0jqutw3c62wv"]
 
 [ext_resource type="Texture2D" uid="uid://cfwm52xurxriy" path="res://assets/images/Mountan.png" id="1_52jxg"]
 [ext_resource type="PackedScene" uid="uid://cu4vgvuaexi2s" path="res://scenes/player.tscn" id="1_g03jv"]
@@ -14,6 +14,12 @@
 [ext_resource type="Script" uid="uid://biitei8kw21e" path="res://scripts/FishingInteraction.gd" id="11_cufjj"]
 [ext_resource type="Texture2D" uid="uid://chvsh4u6wskln" path="res://assets/images/brigde.png" id="11_guwuy"]
 [ext_resource type="PackedScene" uid="uid://cs1n3g1rhfrap" path="res://scenes/FallingLeaves.tscn" id="14_a8y0u"]
+[ext_resource type="PackedScene" uid="uid://blmvkqgkshack" path="res://scenes/WindGust.tscn" id="15_jkv2x"]
+[ext_resource type="Script" uid="uid://bk7m3v5n8w4r2" path="res://scripts/WindGustSpawner.gd" id="16_jbj1t"]
+[ext_resource type="Script" uid="uid://c8sjaojwoddrq" path="res://scripts/MuteButton.gd" id="17_mute"]
+[ext_resource type="Texture2D" uid="uid://barbanunh1amr" path="res://assets/images/tent.png" id="18_dp3eg"]
+[ext_resource type="Texture2D" uid="uid://c2cxntss3lbry" path="res://assets/images/fire1.png" id="19_0ld40"]
+[ext_resource type="Texture2D" uid="uid://dbqty7vkf11uv" path="res://assets/images/fire22.png" id="20_gqmmt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a8y0u"]
 size = Vector2(28.871292, 16.789165)
@@ -25,6 +31,43 @@ size = Vector2(6, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ftqk5"]
 size = Vector2(385.5, 276)
+
+[sub_resource type="Animation" id="Animation_jscy8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("19_0ld40")]
+}
+
+[sub_resource type="Animation" id="Animation_yc10j"]
+resource_name = "fire"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("19_0ld40"), ExtResource("20_gqmmt"), ExtResource("19_0ld40")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pm3ni"]
+_data = {
+&"RESET": SubResource("Animation_jscy8"),
+&"fire": SubResource("Animation_yc10j")
+}
 
 [node name="Main" type="Node2D"]
 z_index = 9
@@ -59,9 +102,9 @@ motion_scale = Vector2(0.1, 0.1)
 texture_filter = 3
 texture_repeat = 1
 offset_left = -2552.0
-offset_top = 233.0
+offset_top = 230.0
 offset_right = 4548.0
-offset_bottom = 745.0
+offset_bottom = 742.0
 mouse_filter = 2
 texture = ExtResource("1_52jxg")
 stretch_mode = 1
@@ -90,9 +133,9 @@ motion_scale = Vector2(0.6, 0.6)
 z_index = 2
 texture_filter = 3
 texture_repeat = 1
-offset_left = -2732.0
+offset_left = -2731.0
 offset_top = 699.0
-offset_right = 4495.0
+offset_right = 4496.0
 offset_bottom = 1239.0
 texture = ExtResource("3_po7qr")
 stretch_mode = 1
@@ -116,10 +159,10 @@ z_as_relative = false
 [node name="ground" type="TextureRect" parent="ParallaxForeground/Ground"]
 z_index = 100
 z_as_relative = false
-offset_left = -1151.0
-offset_top = 908.0
-offset_right = 4468.0
-offset_bottom = 1550.0
+offset_left = -1158.0
+offset_top = 940.0
+offset_right = 4461.0
+offset_bottom = 1582.0
 texture = ExtResource("5_rnkrj")
 stretch_mode = 1
 
@@ -188,10 +231,55 @@ offset_bottom = -81.0
 text = "\"Press E to go fishing"
 
 [node name="Player" parent="." instance=ExtResource("1_g03jv")]
+z_index = 6
 position = Vector2(688, 976)
 
 [node name="FallingLeaves" parent="." instance=ExtResource("14_a8y0u")]
 visible = false
+
+[node name="WindGustSpawner" type="Node2D" parent="."]
+script = ExtResource("16_jbj1t")
+wind_gust_scene = ExtResource("15_jkv2x")
+spawn_interval_max = 2.5
+spawn_y_min = 600.0
+spawn_y_max = 1100.0
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="MuteButton" type="Button" parent="UI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -80.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 50.0
+grow_horizontal = 0
+text = "🔊"
+script = ExtResource("17_mute")
+
+[node name="VolumeSlider" type="HSlider" parent="UI/MuteButton"]
+layout_mode = 0
+offset_left = -160.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 30.0
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+z_index = 5
+position = Vector2(-150, 1015)
+texture = ExtResource("18_dp3eg")
+
+[node name="fireplace" type="Sprite2D" parent="."]
+z_index = 5
+position = Vector2(72, 1105)
+texture = ExtResource("19_0ld40")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="fireplace"]
+libraries = {
+&"": SubResource("AnimationLibrary_pm3ni")
+}
+autoplay = "fire"
 
 [connection signal="body_entered" from="HouseEntrance" to="HouseEntrance" method="_on_body_entered"]
 [connection signal="body_exited" from="HouseEntrance" to="HouseEntrance" method="_on_body_exited"]
@@ -199,3 +287,6 @@ visible = false
 [connection signal="button_up" from="Sprite2D/Button" to="Sprite2D/Button" method="_on_button_button_up"]
 [connection signal="body_entered" from="Brigde/Area2D" to="Brigde/Area2D" method="_on_body_entered"]
 [connection signal="body_exited" from="Brigde/Area2D" to="Brigde/Area2D" method="_on_body_exited"]
+[connection signal="mouse_entered" from="UI/MuteButton" to="UI/MuteButton" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="UI/MuteButton" to="UI/MuteButton" method="_on_mouse_exited"]
+[connection signal="pressed" from="UI/MuteButton" to="UI/MuteButton" method="_on_pressed"]
