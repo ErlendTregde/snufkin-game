@@ -60,11 +60,13 @@ func _ready() -> void:
 	fog_canvas_layer = CanvasLayer.new()
 	fog_canvas_layer.name = "ForegroundFogLayer"
 	fog_canvas_layer.layer = 100  # High layer so it's in front
-	get_parent().add_child(fog_canvas_layer)
+	get_parent().call_deferred("add_child", fog_canvas_layer)
 	
-	# Create fog layers after canvas layer is ready
-	await get_tree().process_frame
-	
+	# Create fog layers deferred to avoid frame hitch
+	_create_fog_deferred.call_deferred()
+
+
+func _create_fog_deferred() -> void:
 	# Create fog layers integrated with parallax structure
 	if auto_map_positions:
 		_create_auto_mapped_fog_layers()
@@ -249,15 +251,15 @@ func _create_fog_at_depth(
 	# Vary noise scale based on depth
 	fog_layer.noise_scale = remap(motion_scale.x, 0.05, 1.2, 0.9, 1.8)
 	
-	# Add to appropriate container
+	# Add to appropriate container (deferred to avoid parent busy errors)
 	if use_foreground:
 		# Add to CanvasLayer for screen-fixed fog
-		fog_canvas_layer.add_child(fog_layer)
+		fog_canvas_layer.call_deferred("add_child", fog_layer)
 	else:
 		# Add fog layer to parallax layer
-		fog_parallax_layer.add_child(fog_layer)
+		fog_parallax_layer.call_deferred("add_child", fog_layer)
 		# Add to ParallaxBackground for parallax fog
-		parallax_background.add_child(fog_parallax_layer)
+		parallax_background.call_deferred("add_child", fog_parallax_layer)
 	
 	fog_layers.append(fog_layer)
 

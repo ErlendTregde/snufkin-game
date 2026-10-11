@@ -13,6 +13,11 @@ var fish_start_y = null  # ✅ Initialize fish's starting Y position
 var fish_resistance = 40  # Fish fights back downwards
 var pull_strength = 100  # How strong the player can pull the fish upwards
 
+# New fishing data integration
+var current_fish_data: Dictionary = {}
+var cast_time: float = 0.0
+var patience_threshold: float = 20.0  # Seconds for patience bonus
+
 @onready var sprite = $Sprite2D  
 @onready var area = $Area2D
 
@@ -59,6 +64,7 @@ func cast_hook():
 	
 	if not is_cast:
 		is_cast = true
+		cast_time = Time.get_ticks_msec() / 1000.0
 		smooth_move(Vector2(position.x, original_position.y + cast_depth))  
 	else:
 		is_cast = false
@@ -73,8 +79,28 @@ func return_to_rod():
 func finish_reeling():
 	# When hook reaches original position, the fish is delivered
 	if fish_caught and is_instance_valid(fish_caught):
+		# Register the catch with FishingData
+		if current_fish_data.has("id"):
+			var time_waited = Time.get_ticks_msec() / 1000.0 - cast_time
+			var is_patient = time_waited >= patience_threshold
+			var is_night = false  # TODO: Add time-of-day system
+			
+			var is_new = FishingData.register_catch(
+				current_fish_data["id"],
+				is_night,
+				is_patient
+			)
+			
+			# Show visual feedback for new/rare fish
+			if is_new:
+				show_new_fish_feedback()
+			
+			if current_fish_data.get("rarity") == "rare" or current_fish_data.get("rarity") == "legendary":
+				show_rare_fish_feedback()
+		
 		fish_caught.queue_free()
 		fish_caught = null
+		current_fish_data = {}
 		
 		# Trigger new fish spawn
 		var fish_spawner = get_node_or_null("/root/FishingScene/FishingZone/FishSpawner")
@@ -84,6 +110,24 @@ func finish_reeling():
 	reeling = false  # Stop fight
 	is_cast = false  # Allow recasting
 	smooth_move(original_position)
+
+func show_new_fish_feedback():
+	# Visual/audio feedback for discovering new species
+	print("🎣 New species discovered!")
+	spawn_particles("rare")  # Always show particles for new discoveries
+
+func show_rare_fish_feedback():
+	# Visual/audio feedback for catching rare fish
+	print("✨ Rare catch!")
+	spawn_particles(current_fish_data.get("rarity", "rare"))
+
+func spawn_particles(rarity: String):
+	# Load and create particle effect
+	var particles_script = preload("res://scripts/catch_particles.gd")
+	var particles = CPUParticles2D.new()
+	particles.set_script(particles_script)
+	get_tree().root.add_child(particles)
+	particles.trigger(global_position, rarity)
 
 func update_fish_position():
 	if fish_caught and is_instance_valid(fish_caught):
@@ -109,6 +153,10 @@ func _on_area_2d_area_entered(other_area):
 	if other_area.is_in_group("fish") and fish_caught == null:
 		# Get the root Fish node (Area2D -> PathFollow2D -> Path2D -> Fish)
 		fish_caught = other_area.get_parent().get_parent().get_parent()
+		
+		# Get fish data from the fish node
+		if fish_caught.has_method("get_fish_data"):
+			current_fish_data = fish_caught.get_fish_data()
 		
 		# Stop the fish from swimming
 		if fish_caught.has_method("set"):

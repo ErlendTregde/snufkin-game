@@ -8,6 +8,9 @@ extends Node2D
 var is_caught: bool = false  # Flag to stop movement when caught
 var move_right: bool = true  # Direction fish is moving
 
+# Fish data from database
+var fish_data: Dictionary = {}
+
 # Cache the reversed curve to avoid recreating it
 var reversed_curve: Curve2D = null
 
@@ -22,6 +25,30 @@ func _ready():
 		path_follow.rotates = false
 		area = path_follow.get_node_or_null("Area2D")
 		sprite = path_follow.get_node_or_null("Sprite2D")
+
+func set_fish_data(data: Dictionary):
+	"""Set fish data from the database"""
+	fish_data = data
+	if data.has("swim_speed"):
+		swim_speed = data["swim_speed"]
+
+func get_fish_data() -> Dictionary:
+	"""Return fish data for collection tracking"""
+	return fish_data
+
+func get_rarity_color() -> Color:
+	"""Return color based on fish rarity"""
+	match fish_data.get("rarity", "common"):
+		"common":
+			return Color(0.8, 0.8, 0.8)  # Light gray
+		"uncommon":
+			return Color(0.5, 0.8, 0.5)  # Light green
+		"rare":
+			return Color(0.5, 0.5, 1.0)  # Light blue
+		"legendary":
+			return Color(1.0, 0.84, 0.0)  # Gold
+		_:
+			return Color.WHITE
 
 func set_direction(right: bool, size_scale: float = 0.5):
 	move_right = right

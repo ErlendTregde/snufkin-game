@@ -5,6 +5,10 @@ extends Node2D
 var saved_position = Vector2.ZERO  # Default value is (0,0)
 var last_hook_position = Vector2.ZERO  # Track hook position changes
 
+func _ready():
+	# Make fishing player pausable
+	process_mode = Node.PROCESS_MODE_PAUSABLE
+
 
 func save_position(new_position):
 	saved_position = new_position

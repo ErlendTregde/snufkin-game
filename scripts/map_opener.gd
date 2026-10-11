@@ -3,8 +3,6 @@ extends Node
 # This script handles opening the map from any scene
 
 func _input(event):
-	if not is_inside_tree():
-		return
 	if event is InputEventKey and event.pressed:
 		if event.keycode == KEY_M:
 			open_map()

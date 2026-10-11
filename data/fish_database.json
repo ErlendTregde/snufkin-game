@@ -1,0 +1,130 @@
+{
+  "fish_species": [
+    {
+      "id": "silver_perch",
+      "name": "Silver Perch",
+      "rarity": "common",
+      "description": "A humble fish, content in shallow waters. Snufkin finds their simplicity peaceful.",
+      "size_range": [0.3, 0.5],
+      "location_hint": "Found near the old bridge...",
+      "swim_speed": 0.02,
+      "weight": 40
+    },
+    {
+      "id": "creek_minnow",
+      "name": "Creek Minnow",
+      "rarity": "common",
+      "description": "Tiny and darting, like silver needles through water. They travel in quiet company.",
+      "size_range": [0.2, 0.3],
+      "location_hint": "Common in all waters",
+      "swim_speed": 0.03,
+      "weight": 35
+    },
+    {
+      "id": "pond_roach",
+      "name": "Pond Roach",
+      "rarity": "common",
+      "description": "An everyday companion of quiet mornings. Nothing fancy, but they're always there.",
+      "size_range": [0.35, 0.45],
+      "location_hint": "Sleeps in the reeds",
+      "swim_speed": 0.02,
+      "weight": 25
+    },
+    {
+      "id": "rainbow_trout",
+      "name": "Rainbow Trout",
+      "rarity": "uncommon",
+      "description": "Colors shimmer beneath the surface like a quiet promise. Moominmamma would love this one.",
+      "size_range": [0.5, 0.7],
+      "location_hint": "Prefers flowing water",
+      "swim_speed": 0.025,
+      "weight": 15
+    },
+    {
+      "id": "golden_carp",
+      "name": "Golden Carp",
+      "rarity": "uncommon",
+      "description": "Wise and patient, they say these fish remember every season. A gift fit for Moominpappa.",
+      "size_range": [0.6, 0.8],
+      "location_hint": "Seeks the deep and still",
+      "swim_speed": 0.015,
+      "weight": 12
+    },
+    {
+      "id": "sunset_bass",
+      "name": "Sunset Bass",
+      "rarity": "uncommon",
+      "description": "Orange scales catch the evening light. They only bite when shadows grow long.",
+      "size_range": [0.55, 0.75],
+      "location_hint": "Active at dusk near Moomin House",
+      "swim_speed": 0.02,
+      "weight": 13
+    },
+    {
+      "id": "moon_fish",
+      "name": "Moon Fish",
+      "rarity": "rare",
+      "description": "Pale and luminous, like captured moonlight. Snufkin once wrote a song about them.",
+      "size_range": [0.65, 0.85],
+      "location_hint": "Only appears under full moon",
+      "swim_speed": 0.01,
+      "weight": 7
+    },
+    {
+      "id": "story_fish",
+      "name": "Story Fish",
+      "rarity": "rare",
+      "description": "Its scales shimmer with tales untold. Each one caught brings a memory from the valley.",
+      "size_range": [0.7, 0.9],
+      "location_hint": "Found where stories are shared",
+      "swim_speed": 0.012,
+      "weight": 8
+    },
+    {
+      "id": "northern_pike",
+      "name": "Northern Pike",
+      "rarity": "rare",
+      "description": "Fierce and quick. Little My would respect this one's fighting spirit.",
+      "size_range": [0.8, 1.0],
+      "location_hint": "Lurks in shadowed waters",
+      "swim_speed": 0.035,
+      "weight": 6
+    },
+    {
+      "id": "wanderer_salmon",
+      "name": "Wanderer's Salmon",
+      "rarity": "legendary",
+      "description": "Like Snufkin, it travels far and returns home. A kindred spirit in silver scales.",
+      "size_range": [0.9, 1.1],
+      "location_hint": "Only in spring, when wanderers return",
+      "swim_speed": 0.025,
+      "weight": 3
+    },
+    {
+      "id": "hattifattener_eel",
+      "name": "Hattifattener Eel",
+      "rarity": "legendary",
+      "description": "Electric and mysterious, drawn to storms. It glows faintly in deep water.",
+      "size_range": [0.85, 1.05],
+      "location_hint": "Appears during thunderstorms",
+      "swim_speed": 0.04,
+      "weight": 2
+    },
+    {
+      "id": "valley_guardian",
+      "name": "Valley Guardian",
+      "rarity": "legendary",
+      "description": "Ancient and rare, said to protect the valley's waters. To catch one is to be truly blessed.",
+      "size_range": [1.0, 1.2],
+      "location_hint": "Knows every corner of the valley",
+      "swim_speed": 0.008,
+      "weight": 1
+    }
+  ],
+  "spawn_weights": {
+    "common": 40,
+    "uncommon": 15,
+    "rare": 7,
+    "legendary": 1
+  }
+}

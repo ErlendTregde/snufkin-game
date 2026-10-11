@@ -20,6 +20,9 @@ var was_moving = false
 var music_track = preload("res://assets/sound/harmonica-solo-2728.mp3")
 
 func _ready():
+	# Make player pausable
+	process_mode = Node.PROCESS_MODE_PAUSABLE
+	
 	await get_tree().process_frame  # Ensure everything loads
 	
 	# Check which scene we're in and spawn accordingly

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bgomool2qdvok"]
+[gd_scene load_steps=15 format=3 uid="uid://bgomool2qdvok"]
 
 [ext_resource type="Texture2D" uid="uid://chvsh4u6wskln" path="res://assets/images/brigde.png" id="1_rwkfx"]
 [ext_resource type="Script" uid="uid://dr1lbga8hn1pl" path="res://scripts/GoHomebutton.gd" id="2_f4jrf"]
@@ -9,7 +9,8 @@
 [ext_resource type="Script" uid="uid://3h6p3dgx7ot3" path="res://scripts/FishingZone.gd" id="7_n8jnv"]
 [ext_resource type="PackedScene" uid="uid://dsiap3bhgpfl1" path="res://scenes/fish.tscn" id="8_fish"]
 [ext_resource type="Script" uid="uid://cx3h7ac0uvcq7" path="res://scripts/fish_spawner.gd" id="9_spawner"]
-[ext_resource type="Script" path="res://scripts/map_opener.gd" id="10_map_opener"]
+[ext_resource type="Script" uid="uid://b2wf1r3xdhp76" path="res://scripts/map_opener.gd" id="10_map_opener"]
+[ext_resource type="PackedScene" uid="uid://b5xm8c2vn3y4r" path="res://scenes/fishing_hud.tscn" id="11_s0dfh"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qw8kf"]
 animations = [{
@@ -107,5 +108,7 @@ shape = SubResource("RectangleShape2D_57s3h")
 
 [node name="MapOpener" type="Node" parent="."]
 script = ExtResource("10_map_opener")
+
+[node name="FishingHUD" parent="." instance=ExtResource("11_s0dfh")]
 
 [connection signal="area_entered" from="FishingPlayer/Hook/Area2D" to="FishingPlayer/Hook" method="_on_area_2d_area_entered"]
